@@ -26,13 +26,17 @@ Route::group(['middleware' => 'auth'], function () {
     // Custom page Route ('resources/views')
     Route::get('tickets', ['as' => 'tickets', 'uses' => 'App\Http\Controllers\PageController@tickets']);
     Route::get('userlist', ['as' => 'user.list', 'uses' => 'App\Http\Controllers\UserController@listUsers']);
+    Route::get('inputticket', ['as' => 'inputticket', 'uses' => 'App\Http\Controllers\PageController@inputticket']);
 
     // User CRUD
     Route::post('/users', ['as' => 'users.store', 'uses' => 'App\Http\Controllers\UserController@store']);
     Route::get('/userlist', ['as' => 'user.list', 'uses' => 'App\Http\Controllers\UserController@listUsers']);
-    
-    // Use DELETE method for user deletion
     Route::delete('/userlist/{id}', ['as' => 'user.destroy', 'uses' => 'App\Http\Controllers\UserController@destroy']);
+
+    // Ticket CRUD
+    Route::post('/tickets', ['as' => 'tickets.store', 'uses' => 'App\Http\Controllers\TicketController@store']); // create tickets
+    Route::get('/tickets', ['as' => 'tickets.list', 'uses' => 'App\Http\Controllers\TicketController@index']);
+    
 });
 
 Route::group(['middleware' => 'auth'], function () {

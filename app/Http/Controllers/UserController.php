@@ -18,7 +18,7 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        // Validate the request
+        // dd($request->role);       // Validate the request
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
