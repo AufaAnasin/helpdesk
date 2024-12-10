@@ -24,6 +24,10 @@ class PageController extends Controller
         return view('tickets');
     }
 
+    public function inputticket() { 
+        return view('inputticket');
+    }
+
     /**
      * Display maps page
      *

@@ -27,9 +27,15 @@
                 <div class="collapse show" id="laravel-examples">
                     <ul class="nav pl-4">
                         <li @if ($pageSlug == 'tickets') class="active " @endif>
-                            <a href="{{ route('tickets') }}">
+                            <a href="{{ route('tickets.list') }}">
                                 <i class="tim-icons icon-laptop"></i>
                                 <p>{{ __('Tickets Ongoing') }}</p>
+                            </a>
+                        </li>
+                        <li @if ($pageSlug == 'inputticket') class="active " @endif>
+                            <a href="{{ route('inputticket') }}">
+                                <i class="tim-icons icon-minimal-right"></i>
+                                <p>{{ __('Input Ticket') }}</p>
                             </a>
                         </li>
                     </ul>
