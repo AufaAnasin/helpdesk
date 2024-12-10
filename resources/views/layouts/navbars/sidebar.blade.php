@@ -18,7 +18,19 @@
                     <p>{{ __('List of Users') }}</p>
                 </a>
             </li>
-            <li>
+            <li @if ($pageSlug == 'tickets') class="active " @endif>
+                <a href="{{ route('tickets.list') }}">
+                    <i class="tim-icons icon-laptop"></i>
+                    <p>{{ __('Tickets Ongoing') }}</p>
+                </a>
+            </li>
+            <li @if ($pageSlug == 'inputticket') class="active " @endif>
+                <a href="{{ route('inputticket') }}">
+                    <i class="tim-icons icon-minimal-right"></i>
+                    <p>{{ __('Input Ticket') }}</p>
+                </a>
+            </li>
+            {{-- <li>
                 <a data-toggle="collapse" href="#laravel-examples" aria-expanded="true">
                     <i class="fab fa-laravel" ></i>
                     <span class="nav-link-text" >{{ __('Tickets') }}</span>
@@ -26,21 +38,10 @@
                 </a>
                 <div class="collapse show" id="laravel-examples">
                     <ul class="nav pl-4">
-                        <li @if ($pageSlug == 'tickets') class="active " @endif>
-                            <a href="{{ route('tickets.list') }}">
-                                <i class="tim-icons icon-laptop"></i>
-                                <p>{{ __('Tickets Ongoing') }}</p>
-                            </a>
-                        </li>
-                        <li @if ($pageSlug == 'inputticket') class="active " @endif>
-                            <a href="{{ route('inputticket') }}">
-                                <i class="tim-icons icon-minimal-right"></i>
-                                <p>{{ __('Input Ticket') }}</p>
-                            </a>
-                        </li>
+
                     </ul>
                 </div>
-            </li>
+            </li> --}}
             {{-- <li @if ($pageSlug == 'icons') class="active " @endif>
                 <a href="{{ route('pages.icons') }}">
                     <i class="tim-icons icon-atom"></i>

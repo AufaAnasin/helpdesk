@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Ticket;
 use App\Models\TicketImage;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Comment;
 
 class TicketController extends Controller
 {
@@ -20,10 +21,10 @@ class TicketController extends Controller
             'message' => 'required|string',
             'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Validate each image
         ]);
-
         // Create a new ticket
         $ticket = Ticket::create([
             'user_id' => Auth::id(), // Get the currently logged-in user's ID
+            'user_name' => Auth::user()->name,
             'title' => $request->title,
             'message' => $request->message,
             'status' => 'open', // Default status
@@ -74,5 +75,30 @@ class TicketController extends Controller
         $ticket->save();
 
         return response()->json(['message' => 'Ticket status updated successfully.']);
+    }
+
+    public function addComment(Request $request, $id)
+    {
+        $request->validate([
+            'comment' => 'required|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $ticket = Ticket::findOrFail($id);
+        $comment = new Comment();
+        $comment->ticket_id = $ticket->id;
+        $comment->user_id = Auth::id();
+        $comment->user_name = Auth::user()->name; // Get the user's name
+        $comment->comment = $request->comment;
+
+        // Handle image upload
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('comment_images', 'public');
+            $comment->image_path = $path;
+        }
+
+        $comment->save();
+
+        return response()->json(['success' => true, 'comment' => $comment->comment, 'user_name' => $comment->user_name, 'image_path' => $comment->image_path]);
     }
 }

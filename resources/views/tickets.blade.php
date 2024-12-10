@@ -17,7 +17,7 @@
                                     <thead>
                                         <tr>
                                             <th class="text-center">ID</th>
-                                            <th>User ID</th>
+                                            <th>Reported by</th>
                                             <th>Title</th>
                                             <th>Message</th>
                                             <th>Status</th>
@@ -28,21 +28,23 @@
                                         @foreach ($tickets as $ticket)
                                             <tr>
                                                 <td class="text-center">{{ $ticket->id }}</td>
-                                                <td>{{ $ticket->user_id }}</td>
+                                                <td>{{ $ticket->user_name }}</td>
                                                 <td>{{ $ticket->title }}</td>
                                                 <td>{{ $ticket->message }}</td>
                                                 <td>
-                                                    @if ($ticket->status == 'open')
-                                                        Open
-                                                    @elseif ($ticket->status == 'in_progress')
-                                                        In Process
-                                                    @elseif ($ticket->status == 'resolved')
-                                                        Resolved
-                                                    @elseif ($ticket->status == 'closed')
-                                                        Closed
-                                                    @else
-                                                        Unknown Status
-                                                    @endif
+                                                    <span class="status-badge {{ strtolower($ticket->status) }}">
+                                                        @if ($ticket->status == 'open')
+                                                            Open
+                                                        @elseif ($ticket->status == 'in_progress')
+                                                            In Process
+                                                        @elseif ($ticket->status == 'resolved')
+                                                            Resolved
+                                                        @elseif ($ticket->status == 'closed')
+                                                            Closed
+                                                        @else
+                                                            Unknown Status
+                                                        @endif
+                                                    </span>
                                                 </td>
                                                 <td>
                                                     {{-- Button for ticket details modal --}}
@@ -110,4 +112,41 @@
             }, 300); // Match the duration of the transition
         }
     </script>
+    <style>
+        .status-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            /* Makes it oval */
+            color: white;
+            /* Text color */
+            font-weight: bold;
+            /* Optional: make text bold */
+        }
+
+        .status-badge.open {
+            background-color: #28a745;
+            /* Green for Open */
+        }
+
+        .status-badge.in_progress {
+            background-color: #ffc107;
+            /* Yellow for In Process */
+        }
+
+        .status-badge.resolved {
+            background-color: #007bff;
+            /* Blue for Resolved */
+        }
+
+        .status-badge.closed {
+            background-color: #dc3545;
+            /* Red for Closed */
+        }
+
+        .status-badge.unknown {
+            background-color: #6c757d;
+            /* Gray for Unknown Status */
+        }
+    </style>
 @endsection
