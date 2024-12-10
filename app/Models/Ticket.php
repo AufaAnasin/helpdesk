@@ -14,11 +14,16 @@ class Ticket extends Model
         'title',
         'message',
         'status',
+        'user_name'
     ];
 
     // Define the relationship with TicketImage
     public function images()
     {
         return $this->hasMany(TicketImage::class);
+    }
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 }

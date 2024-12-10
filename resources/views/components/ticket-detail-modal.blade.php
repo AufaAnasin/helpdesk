@@ -7,37 +7,40 @@
         <div class="modal-body">
             <div class="card">
                 <div class="card-body">
-                    <h6>Title:</h6>
-                    <p id="modalTicketTitle" style="color: white;">{{ $ticket->title }}</p>
+                    <div class="buttontitlegroup">
+                        <div>
+                            <h6>Title:</h6>
+                            <p id="modalTicketTitle" style="color: white;">{{ $ticket->title }}</p>
+                        </div>
+                        <div>
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" onclick="changeTicketStatus('open')">Open</a>
+                                    <a class="dropdown-item" onclick="changeTicketStatus('in_progress')">In Progress</a>
+                                    <a class="dropdown-item" onclick="changeTicketStatus('resolved')">Resolved</a>
+                                    <a class="dropdown-item" onclick="changeTicketStatus('closed')">Closed</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <h6>Message:</h6>
                     <p id="modalTicketMessage" style="color: white;">{{ $ticket->message }}</p>
                     <h6>Images:</h6>
                     <div id="modalTicketImages" class="d-flex flex-wrap">
                         @foreach ($ticket->images as $image)
                             <div style="position: relative; margin: 5px;">
-                                <img src="{{ asset('storage/' . $image->image_path) }}"
-                                    style="width: 100px; height: auto; margin: 5px;">
-                                <button onclick="openImageInNewTab('{{ asset('storage/' . $image->image_path) }}')"
-                                    style="margin-top: 5px; background-color: rgba(0, 0, 0, 0.7); color: white; border: none; padding: 5px; border-radius: 5px;">
-                                    View Full Screen
-                                </button>
+                                <a href="{{ asset('storage/' . $image->image_path) }}" target="_blank">
+                                    <img src="{{ asset('storage/' . $image->image_path) }}"
+                                        style="width: 100px; height: auto; margin: 5px; cursor: pointer;">
+                                </a>
                             </div>
                         @endforeach
                         @if ($ticket->images->isEmpty())
                             <p>No images uploaded.</p>
                         @endif
-                    </div>
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <!-- This will be set dynamically in the JavaScript -->
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" onclick="changeTicketStatus('open')">Open</a>
-                            <a class="dropdown-item" onclick="changeTicketStatus('in_progress')">In Progress</a>
-                            <a class="dropdown-item" onclick="changeTicketStatus('resolved')">Resolved</a>
-                            <a class="dropdown-item" onclick="changeTicketStatus('closed')">Closed</a>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -46,6 +49,11 @@
 </div>
 
 <style>
+    .buttontitlegroup {
+        display: flex;
+        justify-content: space-between;
+    }
+
     .modal {
         display: none;
         /* Hidden by default */
@@ -79,12 +87,12 @@
     .modal-content {
         background-color: transparent;
         /* Transparent */
-        margin: 100px auto;
+        margin: 80px auto;
         /* Center the modal */
         padding: 20px;
         border: none;
         /* Remove border */
-        width: 50%;
+        width: 100%;
         /* Adjust width as needed */
         max-width: 500px;
         /* Max width for larger screens */
