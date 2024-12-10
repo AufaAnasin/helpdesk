@@ -6,7 +6,7 @@
             <div class="col">
                 <p>Input Ticket</p>
                 <div class="card">
-                    <div class="card-body">1
+                    <div class="card-body">
                         <form method="POST" action="{{ route('tickets.store') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">

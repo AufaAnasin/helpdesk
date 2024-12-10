@@ -24,7 +24,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('upgrade', ['as' => 'pages.upgrade', 'uses' => 'App\Http\Controllers\PageController@upgrade']);
 
     // Custom page Route ('resources/views')
-    Route::get('tickets', ['as' => 'tickets', 'uses' => 'App\Http\Controllers\PageController@tickets']);
+    Route::get('tickets', ['as' => 'tickets', 'uses' => 'App\Http\Controllers\PageController@tickets']); 
     Route::get('userlist', ['as' => 'user.list', 'uses' => 'App\Http\Controllers\UserController@listUsers']);
     Route::get('inputticket', ['as' => 'inputticket', 'uses' => 'App\Http\Controllers\PageController@inputticket']);
 
@@ -36,7 +36,9 @@ Route::group(['middleware' => 'auth'], function () {
     // Ticket CRUD
     Route::post('/tickets', ['as' => 'tickets.store', 'uses' => 'App\Http\Controllers\TicketController@store']); // create tickets
     Route::get('/tickets', ['as' => 'tickets.list', 'uses' => 'App\Http\Controllers\TicketController@index']);
-    
+    Route::get('/tickets/{$id}', ['as' => 'tickets.show', 'uses' => 'App\Http\Controllers\TicketController@show']);
+    Route::delete('/tickets/{id}', ['as' => 'tickets.destroy', 'uses' => 'App\Http\Controllers\TicketController@destroy']);
+    Route::patch('/tickets/{id}/status', ['as' => 'tickets.updateStatus', 'uses' => 'App\Http\Controllers\TicketController@updateStatus']);
 });
 
 Route::group(['middleware' => 'auth'], function () {

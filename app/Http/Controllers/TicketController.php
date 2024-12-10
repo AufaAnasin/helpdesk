@@ -45,9 +45,34 @@ class TicketController extends Controller
         return redirect()->route('inputticket')->with('success', 'Ticket created successfully!');
     }
 
-    public function index() {
+    public function index()
+    {
         $tickets = Ticket::with('images')->get();
         return view('tickets', compact('tickets'));
     }
-}
 
+    public function show($id)
+    {
+        $ticket = Ticket::with('images')->findOrFail($id);
+        return response()->json($ticket);
+    }
+
+    public function destroy($id)
+    {
+        $ticket = Ticket::findOrFail($id);
+        $ticket->delete();
+        return redirect()->route('tickets.list')->with('success', 'Ticket deleted successfully!');
+    }
+    public function updateStatus(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|string|in:open,in_progress,resolved,closed',
+        ]);
+
+        $ticket = Ticket::findOrFail($id);
+        $ticket->status = $request->status;
+        $ticket->save();
+
+        return response()->json(['message' => 'Ticket status updated successfully.']);
+    }
+}
