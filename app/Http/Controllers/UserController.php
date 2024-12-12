@@ -13,6 +13,7 @@ class UserController extends Controller
     public function listUsers()
     {
         $users = User::paginate(15);
+        $pageSlug = 'userlist';
         return view('userlist', compact('users'));
     }
 

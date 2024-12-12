@@ -21,6 +21,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('dashboard');
+        $pageSlug = 'dashboard'; // Set the appropriate slug based on your logic
+        return view('welcome', compact('pageSlug')); // Pass the variable to the view
     }
 }
