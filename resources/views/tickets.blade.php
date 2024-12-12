@@ -95,14 +95,40 @@
             // Update the dropdown button text
             const dropdownButton = document.getElementById('dropdownMenuButton');
             dropdownButton.textContent = ticketStatus.charAt(0).toUpperCase() + ticketStatus.slice(1);
-
-            // Store the ticket ID in a data attribute for later use
             dropdownButton.setAttribute('data-ticket-id', ticketId);
+
+            // Clear previous images
+            const modalTicketImages = document.getElementById('modalTicketImages');
+            modalTicketImages.innerHTML = '';
+
+            // Populate images
+            if (ticket.images && ticket.images.length > 0) {
+                ticket.images.forEach(image => {
+                    const imgDiv = document.createElement('div');
+                    imgDiv.style.position = 'relative';
+                    imgDiv.style.margin = '5px';
+
+                    const img = document.createElement('img');
+                    img.src = `/storage/${image.image_path}`; // Adjust the path as necessary
+                    img.style.width = '100px';
+                    img.style.height = 'auto';
+                    img.style.cursor = 'pointer';
+                    img.onclick = function() {
+                        openImageInNewTab(img.src); // Open image in new tab on click
+                    };
+
+                    imgDiv.appendChild(img);
+                    modalTicketImages.appendChild(imgDiv);
+                });
+            } else {
+                modalTicketImages.innerHTML = '<p>No images uploaded.</p>';
+            }
 
             // Show the modal
             modal.style.display = 'block';
             modal.classList.add('show');
         }
+
 
         function closeTicketDetailModal() {
             const modal = document.getElementById('ticketDetailModal');
