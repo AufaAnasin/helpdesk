@@ -8,6 +8,7 @@ use App\Models\TicketImage;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Comment;
 use App\Models\CommentImage;
+use Flasher\Prime\FlasherInterface;
 
 class TicketController extends Controller
 {
@@ -46,8 +47,8 @@ class TicketController extends Controller
                     ]);
                 }
             }
-
-            return redirect()->route('inputticket')->with('success', 'Ticket created successfully!');
+            flash()->options(['timeout' => 3000, 'position' => 'bottom-center'])->success('Your Ticket has been submitted.'); // display success message
+            return redirect()->route('inputticket');
         } catch (\Illuminate\Validation\ValidationException $e) {
             // Handle validation errors
             return redirect()->route('inputticket')
@@ -75,7 +76,8 @@ class TicketController extends Controller
     {
         $ticket = Ticket::findOrFail($id);
         $ticket->delete();
-        return redirect()->route('tickets.list')->with('success', 'Ticket deleted successfully!');
+        flash()->options(['timeout' => 3000, 'position' => 'bottom-center'])->info('Ticket has been deleted.');
+        return redirect()->route('tickets.list');
     }
     public function updateStatus(Request $request, $id)
     {
