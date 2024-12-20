@@ -1,6 +1,10 @@
 @extends('layouts.app', ['class' => 'login-page', 'page' => __('Login Page'), 'contentClass' => 'login-page'])
 
 @section('content')
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+</head>
+<body>
     <div class="col-md-10 text-center ml-auto mr-auto">
         <h3 class="mb-5">Place for getting your help for IT Needs.</h3>
     </div>
@@ -49,6 +53,7 @@
             </div>
         </form>
     </div>
+</body>
 @endsection
 
 <style>

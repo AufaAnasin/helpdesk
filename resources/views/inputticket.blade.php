@@ -1,40 +1,50 @@
 @extends('layouts.app', ['pageSlug' => 'inputticket'])
 
 @section('content')
-<div class="container">
-        <div class="row">
-            <div class="col">
-                <p>Input Ticket</p>
-                <div class="card">
-                    <div class="card-body">
-                        <form method="POST" action="{{ route('tickets.store') }}" enctype="multipart/form-data">
-                            @csrf
-                            <div class="form-group">
-                                <label for="title">Title</label>
-                                <input type="text" class="form-control" id="title" name="title" placeholder="Title" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="message">Message</label>
-                                <textarea class="form-control" id="message" name="message" placeholder="Enter your message here" required></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="imageUpload">Upload Images (Max 7)</label>
-                                <div id="drop-area" class="drop-area">
-                                    <p>Drag & drop your images here or click to select</p>
-                                    <input type="file" id="imageUpload" name="images[]" multiple accept="image/*" style="display: none;">
-                                </div>
-                                <small class="form-text text-muted">You can upload up to 7 images.</small>
-                            </div>
 
-                            <div id="image-preview" class="image-preview"></div>
-                            
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </form>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <p>Input Ticket</p>
+                    <div class="card">
+                        <div class="card-body">
+                            <form method="POST" action="{{ route('tickets.store') }}" enctype="multipart/form-data">
+                                @csrf
+                                <div class="form-group">
+                                    <label for="title">Title</label>
+                                    <input type="text" class="form-control" id="title" name="title"
+                                        placeholder="Title" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="message">Message</label>
+                                    <textarea class="form-control" id="message" name="message" placeholder="Enter your message here" required></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="imageUpload">Upload Images (Max 7)</label>
+                                    <div id="drop-area" class="drop-area">
+                                        <p>Drag & drop your images here or click to select</p>
+                                        <input type="file" id="imageUpload" name="images[]" multiple accept="image/*"
+                                            style="display: none;">
+                                    </div>
+                                    <small class="form-text text-muted">You can upload up to 7 images.</small>
+                                </div>
+
+                                <div id="image-preview" class="image-preview"></div>
+
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </body>
+
 
     <style>
         .drop-area {
@@ -45,40 +55,56 @@
             cursor: pointer;
             margin-top: 10px;
         }
+
         .drop-area.hover {
             border-color: #0056b3;
         }
+
         .image-preview {
             display: flex;
             flex-wrap: wrap;
             margin-top: 10px;
         }
+
         .image-preview div {
-            position: relative; /* Position relative for absolute positioning of delete button */
+            position: relative;
+            /* Position relative for absolute positioning of delete button */
             margin: 5px;
         }
+
         .image-preview img {
-            width: 100px; /* Set the width of the preview images */
+            width: 100px;
+            /* Set the width of the preview images */
             height: auto;
             border: 1px solid #ccc;
             border-radius: 5px;
         }
+
         .delete-btn {
-            position: absolute; /* Position absolute to place it in the corner */
+            position: absolute;
+            /* Position absolute to place it in the corner */
             top: 0;
             right: 0;
             background: red;
             color: white;
             border: none;
-            border-radius: 50%; /* Make the button circular */
+            border-radius: 50%;
+            /* Make the button circular */
             cursor: pointer;
-            width: 25px; /* Set width */
-            height: 25px; /* Set height */
-            padding: 0; /* Remove padding */
-            font-size: 14px; /* Adjust font size */
-            display: flex; /* Center the text */
-            align-items: center; /* Center vertically */
-            justify-content: center; /* Center horizontally */
+            width: 25px;
+            /* Set width */
+            height: 25px;
+            /* Set height */
+            padding: 0;
+            /* Remove padding */
+            font-size: 14px;
+            /* Adjust font size */
+            display: flex;
+            /* Center the text */
+            align-items: center;
+            /* Center vertically */
+            justify-content: center;
+            /* Center horizontally */
         }
     </style>
 

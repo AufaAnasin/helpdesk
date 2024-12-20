@@ -30,7 +30,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($tickets as $ticket)
+                                        @forelse ($tickets as $ticket)
                                             <tr>
                                                 <td class="text-center">{{ $ticket->id }}</td>
                                                 <td>{{ $ticket->user_name }}</td>
@@ -72,7 +72,11 @@
                                                     </form>
                                                 </td>
                                             </tr>
-                                        @endforeach
+                                        @empty
+                                            <tr>
+                                                <td colspan="6" class="text-center">No ongoing tickets found.</td>
+                                            </tr>
+                                        @endforelse
                                     </tbody>
                                 </table>
                             </div>
@@ -85,7 +89,11 @@
     </div>
 
     {{-- Include the Ticket Detail Modal Component --}}
-    <x-ticket-detail-modal :ticket="$tickets[0]" /> <!-- Pass a default ticket for the component -->
+    @if ($tickets->isNotEmpty())
+        <x-ticket-detail-modal :ticket="$tickets[0]" /> <!-- Pass a default ticket for the component -->
+    @else
+        <x-ticket-detail-modal :ticket="null" /> <!-- Pass null or handle accordingly -->
+    @endif
 
     <script>
         function openTicketDetailModal(ticket) {
@@ -133,7 +141,6 @@
             modal.style.display = 'block';
             modal.classList.add('show');
         }
-
 
         function closeTicketDetailModal() {
             const modal = document.getElementById('ticketDetailModal');
