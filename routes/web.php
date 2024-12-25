@@ -29,7 +29,8 @@ Route::group(['middleware' => 'auth'], function () {
     // Ticket CRUD
     Route::post('/tickets', ['as' => 'tickets.store', 'uses' => 'App\Http\Controllers\TicketController@store']); // Admin and Client
     Route::get('/tickets', ['as' => 'tickets.list', 'uses' => 'App\Http\Controllers\TicketController@index']); // Admin only
-    Route::get('/tickets/{$id}', ['as' => 'tickets.show', 'uses' => 'App\Http\Controllers\TicketController@show']); // Admin and Client
+    Route::get('/tickets/{id}', ['as' => 'tickets.show', 'uses' => 'App\Http\Controllers\TicketController@show']); // Admin and Client
+
     Route::delete('/tickets/{id}', ['as' => 'tickets.destroy', 'uses' => 'App\Http\Controllers\TicketController@destroy']); // Admin only
     Route::patch('/tickets/{id}/status', ['as' => 'tickets.updateStatus', 'uses' => 'App\Http\Controllers\TicketController@updateStatus']); // Admin only
 

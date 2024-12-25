@@ -37,7 +37,7 @@
                             <div style="position: relative; margin: 5px;">
                                 <a href="{{ asset('storage/' . $image->image_path) }}" target="_blank">
                                     <img src="{{ asset('storage/' . $image->image_path) }}"
-                                        style="width: 100px; height: auto; margin: 5px; cursor: pointer;">
+                                        style="width: 100px; height: 100px; margin: 5px; cursor: pointer;">
                                 </a>
                             </div>
                         @endforeach
@@ -48,7 +48,8 @@
                     <div class="border-line"></div>
                     <h5><b>Comments</b></h5>
                     <div class="commentWrapper">
-                        <form action="{{ route('tickets.addComment', $ticket->id) }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('tickets.addComment', $ticket->id) }}" method="POST"
+                            enctype="multipart/form-data">
                             @csrf
                             <div class="commentUserDetails">
                                 <img class="avatar" src="{{ asset('black') }}/img/default-avatar.png" alt="">
@@ -58,7 +59,8 @@
                                 <textarea class="form-control" id="message" name="comment" placeholder="Enter your message here" required></textarea>
                             </div>
                             <div class="form-group">
-                                <input style="border: 1px solid red;" type="file" id="imageUpload" name="images[]" accept="image/*" multiple onchange="previewImages()">Testt</input>
+                                <input style="border: 1px solid red;" type="file" id="imageUpload" name="images[]"
+                                    accept="image/*" multiple onchange="previewImages()">Testt</input>
                             </div>
                             <div id="imagePreview" class="d-flex flex-wrap"></div>
                             <div class="sendimagebutton">
@@ -72,6 +74,38 @@
                             </div>
                         </form>
                     </div>
+                    <div class="listOfComments">
+                        @if ($ticket->comments->isEmpty())
+                            <p>No comments yet.</p>
+                        @else
+                            @foreach ($ticket->comments as $comment)
+                                <div class="commentWrapper"
+                                    style="border: 1px solid #32325d; margin: 10px 0; display: flex; justify-content: space-between;">
+                                    <div class="commentUserWrapper">
+                                        <div class="commentUserDetails">
+                                            <img class="avatar" src="{{ asset('black') }}/img/default-avatar.png"
+                                                alt="">
+                                            <p><b>{{ $comment->user_name }}</b></p>
+                                            <p style="color: white; ">{{ $comment->created_at->diffForHumans() }}
+                                            </p>
+                                        </div>
+                                        <p style="margin:0 35px; color: white;">
+                                            {{ $comment->comment }}</p>
+                                    </div>
+                                    <div class="commentImageWrapper">
+                                        @foreach ($comment->images as $commentimages)
+                                            <a href="{{ asset('storage/' . $commentimages->image_path) }}"
+                                                target="_blank">
+                                                <img src="{{ asset('storage/' . $commentimages->image_path) }}"
+                                                    alt=""
+                                                    style="height: 60px; width: 60px; margin: 5px; cursor; pointer;">
+                                            </a>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            @endforeach
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>
@@ -79,6 +113,11 @@
 </div>
 
 <style>
+    .listOfComments p {
+        color: white;
+
+    }
+
     #imagePreview {
         display: flex;
         flex-wrap: wrap;
@@ -116,7 +155,6 @@
         margin-right: 10px;
         /* Add space between the upload button and the icon */
     }
-
 
     .commentUserDetails p b {
         color: white;
@@ -208,6 +246,15 @@
         border-radius: 8px;
         /* Rounded corners */
         overflow-x: hidden;
+        transform: translateY(-30px);
+        /* Start slightly above */
+        transition: transform 0.3s ease;
+        /* Transition for slide effect */
+    }
+
+    .modal.show .modal-content {
+        transform: translateY(0);
+        /* Slide down to original position */
     }
 
     .modal-header {
@@ -244,7 +291,6 @@
     function openImageInNewTab(src) {
         window.open(src, '_blank'); // Open the image in a new tab
     }
-
 
     function changeTicketStatus(status) {
         const dropdownButton = document.getElementById('dropdownMenuButton');

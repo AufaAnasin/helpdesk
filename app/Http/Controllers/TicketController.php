@@ -16,38 +16,47 @@ class TicketController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
-        // Validate the request
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'message' => 'required|string',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Validate each image
-        ]);
-        // Create a new ticket
-        $ticket = Ticket::create([
-            'user_id' => Auth::id(), // Get the currently logged-in user's ID
-            'user_name' => Auth::user()->name,
-            'title' => $request->title,
-            'message' => $request->message,
-            'status' => 'open', // Default status
-        ]);
+        try {
+            // Validate the request
+            $request->validate([
+                'title' => 'required|string|max:255',
+                'message' => 'required|string',
+                'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:20480', // Validate each image
+            ]);
 
-        // dd($ticket);
+            // Create a new ticket
+            $ticket = Ticket::create([
+                'user_id' => Auth::id(), // Get the currently logged-in user's ID
+                'user_name' => Auth::user()->name,
+                'title' => $request->title,
+                'message' => $request->message,
+                'status' => 'open', // Default status
+            ]);
 
-        // Handle image uploads
-        if (!empty($request->images)) {
-            foreach ($request->images as $image) {
-                // Store the image and get the path
-                $path = $image->store('ticket_images', 'public'); // Store in public/ticket_images
+            // Handle image uploads
+            if (!empty($request->images)) {
+                foreach ($request->images as $image) {
+                    // Store the image and get the path
+                    $path = $image->store('ticket_images', 'public'); // Store in public/ticket_images
 
-                // Create a new TicketImage record
-                TicketImage::create([
-                    'ticket_id' => $ticket->id,
-                    'image_path' => $path,
-                ]);
+                    // Create a new TicketImage record
+                    TicketImage::create([
+                        'ticket_id' => $ticket->id,
+                        'image_path' => $path,
+                    ]);
+                }
             }
+
+            return redirect()->route('inputticket')->with('success', 'Ticket created successfully!');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Handle validation errors
+            return redirect()->route('inputticket')
+                ->withErrors($e->validator)
+                ->withInput(); // Redirect back with input data
+        } catch (\Exception $e) {
+            // Handle other exceptions
+            return redirect()->route('inputticket')->with('error', 'An error occurred: ' . $e->getMessage());
         }
-        return redirect()->route('inputticket')->with('success', 'Ticket created successfully!');
     }
 
     public function index()
@@ -58,8 +67,8 @@ class TicketController extends Controller
 
     public function show($id)
     {
-        $ticket = Ticket::with('images')->findOrFail($id);
-        return response()->json($ticket);
+        $ticket = Ticket::with(['images', 'comments'])->findOrFail($id);
+        return view('ticket.show', compact('ticket'));
     }
 
     public function destroy($id)
