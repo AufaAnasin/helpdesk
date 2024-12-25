@@ -7,9 +7,14 @@
             <div class="col-12">
                 <div class="col-md-12">
                     <div class="card">
-                        <div class="card-header card-header-primary">
-                            <h4 class="card-title">Ongoing Tickets 🚠</h4>
-                            <p>These tickets are currently being addressed by our support team and are in progress.</p>
+                        <div class="card-header card-header-primary tickets-header">
+                            <h4 class="card-title"><b>Ongoing Tickets 🚠</b></h4>
+                            <a href="{{ route('inputticket') }}">
+                                <button type="button" class="btn btn-success addticketbutton">
+                                    <i class="tim-icons icon-simple-add"></i>
+                                    Add Ticket
+                                </button>
+                            </a>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -139,6 +144,18 @@
         }
     </script>
     <style>
+        .tickets-header {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .addticketbutton {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
         .status-badge {
             display: inline-block;
             padding: 5px 10px;

@@ -86,7 +86,7 @@
                                             <img class="avatar" src="{{ asset('black') }}/img/default-avatar.png"
                                                 alt="">
                                             <p><b>{{ $comment->user_name }}</b></p>
-                                            <p style="color: white; ">{{ $comment->created_at->diffForHumans() }}
+                                            <p style="color: #5e72e4; ">{{ $comment->created_at->diffForHumans() }}
                                             </p>
                                         </div>
                                         <p style="margin:0 35px; color: white;">

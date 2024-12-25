@@ -90,6 +90,17 @@ class TicketController extends Controller
         return response()->json(['message' => 'Ticket status updated successfully.']);
     }
 
+    public function userTickets()
+    {
+        // Get the currently logged-in user's ID
+        $userId = Auth::id();
+        // Retrieve tickets created by the logged-in user
+        $tickets = Ticket::where('user_id', $userId)->with('images')->get();
+        // Return the view with the tickets
+        return view('usertickets', compact('tickets'));
+    }
+
+
     public function addComment(Request $request, $id)
     {
         // Validate the request

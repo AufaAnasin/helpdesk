@@ -24,5 +24,11 @@
                     <p>{{ __('Input Ticket') }}</p>
                 </a>
             </li>
+            <li @if ($pageSlug == 'user-tickets') class="active " @endif>
+                <a href="{{ route('user.tickets') }}">
+                    <i class="tim-icons icon-bullet-list-67"></i>
+                    <p>{{ __('My Tickets') }}</p>
+                </a>
+            </li>
     </div>
 </div>

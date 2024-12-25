@@ -42,9 +42,9 @@ class PageController extends Controller
         return view('test');
     }
 
-    public function userlist()
+    public function mytickets()
     {
-        return view('userlist');
+        return view('mytickets');
     }
 
     /**
