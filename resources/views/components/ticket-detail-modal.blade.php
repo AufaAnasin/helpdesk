@@ -58,20 +58,23 @@
                             <div class="form-group">
                                 <textarea class="form-control" id="message" name="comment" placeholder="Enter your message here" required></textarea>
                             </div>
-                            <div class="form-group">
-                                <input style="border: 1px solid red;" type="file" id="imageUpload" name="images[]"
-                                    accept="image/*" multiple onchange="previewImages()">Testt</input>
-                            </div>
-                            <div id="imagePreview" class="d-flex flex-wrap"></div>
-                            <div class="sendimagebutton">
-                                <div class="buttonwrapper">
-                                    <div class="buttonGroup">
-                                        <button type="submit" class="btn btn-success btn-link btn-icon btn-sm">
-                                            <i class="tim-icons icon-send"></i>
-                                        </button>
+                            <div class="commentButtonGroup" style="margin-left: 10px;">
+                                <div class="form-group" style="margin-top: 5px;">
+                                    <input style="border: 1px solid red;" type="file" id="imageUpload"
+                                        name="images[]" accept="image/*" multiple onchange="previewImages()"><i
+                                        class="tim-icons icon-image-02"></i></input>
+                                </div>
+                                <div class="sendimagebutton">
+                                    <div class="buttonwrapper">
+                                        <div class="buttonGroup">
+                                            <button type="submit" class="btn btn-success btn-link btn-icon btn-sm">
+                                                <i class="tim-icons icon-send"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            <div id="imagePreview" class="d-flex flex-wrap"></div>
                         </form>
                     </div>
                     <div class="listOfComments">
@@ -113,6 +116,10 @@
 </div>
 
 <style>
+    .commentButtonGroup {
+        display: flex;
+    }
+
     .listOfComments p {
         color: white;
 
@@ -128,14 +135,6 @@
         margin: 5px;
     }
 
-    .sendimagebutton {
-        display: flex;
-        justify-content: space-between;
-        /* Space between the upload and submit buttons */
-        align-items: center;
-        margin-left: 10px;
-    }
-
     .buttonwrapper {
         display: flex;
         align-items: center;
@@ -143,7 +142,7 @@
     }
 
     .buttonGroup {
-        margin-left: 10px;
+        margin-left: 5px;
         /* Add space between the upload button and the submit button */
     }
 

@@ -19,32 +19,45 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->role);       // Validate the request
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-            'role' => 'required|string',
-        ]);
-    
-        // Create the user
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => $request->role, // Store role directly from dropdown
-        ]);
-    
-        // Redirect back with success message
-        return redirect()->route('user.list')->with('success', 'User created successfully!');
+        try {
+            // Validate the request
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255|unique:users',
+                'password' => 'required|string|min:8|confirmed',
+                'role' => 'required|string',
+            ]);
+
+            // Create the user
+            User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'role' => $request->role, // Store role directly from dropdown
+            ]);
+
+            // Redirect back with success message
+            flash()->options(['timeout' => 3000, 'position' => 'bottom-center'])->success('User created successfully!');
+            return redirect()->route('user.list');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Handle validation errors
+            return redirect()->route('user.create') // Redirect back to the form
+                ->withErrors($e->validator) // Pass validation errors
+                ->withInput(); // Retain input data
+        } catch (\Exception $e) {
+            // Handle other exceptions
+            flash()->options(['timeout' => 3000, 'position' => 'bottom-center'])->error('An error occurred: ' . $e->getMessage());
+            return redirect()->route('user.create'); // Redirect back to the form
+        }
     }
-    
+
+
 
     public function destroy($id)
     {
         $user = User::findOrFail($id);
         $user->delete();
-
-        return redirect()->route('user.list')->with('success', 'User deleted successfully!');
+        flash()->options(['timeout' => 3000, 'position' => 'bottom-center'])->info('User has been deleted.');
+        return redirect()->route('user.list');
     }
 }

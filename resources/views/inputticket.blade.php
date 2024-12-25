@@ -21,7 +21,7 @@
                                 <label for="imageUpload">Upload Images (Max 7)</label>
                                 <div id="drop-area" class="drop-area">
                                     <p>Drag & drop your images here or click to select</p>
-                                    <input type="file" id="imageUpload" name="images[]" multiple accept="image/*" required style="display: none;">
+                                    <input type="file" id="imageUpload" name="images[]" multiple accept="image/*" style="display: none;">
                                 </div>
                                 <small class="form-text text-muted">You can upload up to 7 images.</small>
                             </div>
