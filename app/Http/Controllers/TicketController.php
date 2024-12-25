@@ -7,6 +7,7 @@ use App\Models\Ticket;
 use App\Models\TicketImage;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Comment;
+use App\Models\CommentImage;
 
 class TicketController extends Controller
 {
@@ -15,6 +16,7 @@ class TicketController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         // Validate the request
         $request->validate([
             'title' => 'required|string|max:255',
@@ -30,9 +32,11 @@ class TicketController extends Controller
             'status' => 'open', // Default status
         ]);
 
+        // dd($ticket);
+
         // Handle image uploads
-        if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $image) {
+        if (!empty($request->images)) {
+            foreach ($request->images as $image) {
                 // Store the image and get the path
                 $path = $image->store('ticket_images', 'public'); // Store in public/ticket_images
 
@@ -79,9 +83,10 @@ class TicketController extends Controller
 
     public function addComment(Request $request, $id)
     {
+        // Validate the request
         $request->validate([
             'comment' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Allow multiple images
         ]);
 
         $ticket = Ticket::findOrFail($id);
@@ -90,15 +95,20 @@ class TicketController extends Controller
         $comment->user_id = Auth::id();
         $comment->user_name = Auth::user()->name; // Get the user's name
         $comment->comment = $request->comment;
+        $comment->save(); // Save the comment first
 
-        // Handle image upload
-        if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('comment_images', 'public');
-            $comment->image_path = $path;
+        // Handle image uploads
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('comment_images', 'public'); // Store in public/comment_images
+
+                // Create a new CommentImage record
+                CommentImage::create([
+                    'comment_id' => $comment->id,
+                    'image_path' => $path,
+                ]);
+            }
         }
-
-        $comment->save();
-
-        return response()->json(['success' => true, 'comment' => $comment->comment, 'user_name' => $comment->user_name, 'image_path' => $comment->image_path]);
+        return response()->json(['success' => true, 'comment' => $comment->comment, 'user_name' => $comment->user_name]);
     }
 }
