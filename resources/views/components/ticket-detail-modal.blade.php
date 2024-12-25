@@ -1,123 +1,137 @@
 <!-- Ticket Detail Modal -->
-<div id="ticketDetailModal" class="modal" style="display: none;">
-    <div class="modal-content">
-        <div class="modal-header">
-            <button type="button" class="close" onclick="closeTicketDetailModal()">&times;</button>
-        </div>
-        <div class="modal-body">
-            <div class="card">
-                <div class="card-body">
-                    <div class="ticketTitleHead">
-                        <div class="ticketTitle">
-                            <h4 style="color: white;"><b>[Ticket #{{ $ticket->id }}]</b></h4>
-                            <h4 id="modalTicketTitle"> {{ $ticket->title }}</h4>
-                        </div>
-                        <div class="buttontitlegroup">
-                            <div>
-                                <div class="dropdown">
-                                    <button class="btn btn-secondary dropdown-toggle" type="button"
-                                        id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                                        aria-expanded="false">
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" onclick="changeTicketStatus('open')">Open</a>
-                                        <a class="dropdown-item" onclick="changeTicketStatus('in_progress')">In
-                                            Progress</a>
-                                        <a class="dropdown-item" onclick="changeTicketStatus('resolved')">Resolved</a>
-                                        <a class="dropdown-item" onclick="changeTicketStatus('closed')">Closed</a>
-                                    </div>
-                                </div>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+</head>
+
+<body>
+    <div id="ticketDetailModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" onclick="closeTicketDetailModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="ticketTitleHead">
+                            <div class="ticketTitle">
+                                <h4 style="color: white;"><b>[Ticket #{{ $ticket->id }}]</b></h4>
+                                <h4 id="modalTicketTitle"> {{ $ticket->title }}</h4>
                             </div>
-                        </div>
-                    </div>
-                    <h6>Details</h6>
-                    <p id="modalTicketMessage" style="color: white;">{{ $ticket->message }}</p>
-                    <div id="modalTicketImages" class="d-flex flex-wrap">
-                        @foreach ($ticket->images as $image)
-                            <div style="position: relative; margin: 5px;">
-                                <a href="{{ asset('storage/' . $image->image_path) }}" target="_blank">
-                                    <img src="{{ asset('storage/' . $image->image_path) }}"
-                                        style="width: 100px; height: 100px; margin: 5px; cursor: pointer;">
-                                </a>
-                            </div>
-                        @endforeach
-                        @if ($ticket->images->isEmpty())
-                            <p>No images uploaded.</p>
-                        @endif
-                    </div>
-                    <div class="border-line"></div>
-                    <h5><b>Comments</b></h5>
-                    <div class="commentWrapper">
-                        <form action="{{ route('tickets.addComment', $ticket->id) }}" method="POST"
-                            enctype="multipart/form-data">
-                            @csrf
-                            <div class="commentUserDetails">
-                                <img class="avatar" src="{{ asset('black') }}/img/default-avatar.png" alt="">
-                                <p><b>{{ auth()->user()->name }}</b></p>
-                            </div>
-                            <div class="form-group">
-                                <textarea class="form-control" id="message" name="comment" placeholder="Enter your message here" required></textarea>
-                            </div>
-                            <div class="commentButtonGroup" style="margin-left: 10px;">
-                                <div class="form-group" style="margin-top: 5px;">
-                                    <input style="border: 1px solid red;" type="file" id="imageUpload"
-                                        name="images[]" accept="image/*" multiple onchange="previewImages()"><i
-                                        class="tim-icons icon-image-02"></i></input>
-                                </div>
-                                <div class="sendimagebutton">
-                                    <div class="buttonwrapper">
-                                        <div class="buttonGroup">
-                                            <button type="submit" class="btn btn-success btn-link btn-icon btn-sm">
-                                                <i class="tim-icons icon-send"></i>
-                                            </button>
+                            <div class="buttontitlegroup">
+                                <div>
+                                    <div class="dropdown">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button"
+                                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false">
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" onclick="changeTicketStatus('open')">Open</a>
+                                            <a class="dropdown-item" onclick="changeTicketStatus('in_progress')">In
+                                                Progress</a>
+                                            <a class="dropdown-item"
+                                                onclick="changeTicketStatus('resolved')">Resolved</a>
+                                            <a class="dropdown-item" onclick="changeTicketStatus('closed')">Closed</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div id="imagePreview" class="d-flex flex-wrap"></div>
-                        </form>
-                    </div>
-                    <div class="listOfComments">
-                        @if ($ticket->comments->isEmpty())
-                            <p>No comments yet.</p>
-                        @else
-                            @foreach ($ticket->comments as $comment)
-                                <div class="commentWrapper"
-                                    style="border: 1px solid #32325d; margin: 10px 0; display: flex; justify-content: space-between;">
-                                    <div class="commentUserWrapper">
-                                        <div class="commentUserDetails">
-                                            <img class="avatar" src="{{ asset('black') }}/img/default-avatar.png"
-                                                alt="">
-                                            <p><b>{{ $comment->user_name }}</b></p>
-                                            <p style="color: #5e72e4; ">{{ $comment->created_at->diffForHumans() }}
-                                            </p>
-                                        </div>
-                                        <p style="margin:0 35px; color: white;">
-                                            {{ $comment->comment }}</p>
-                                    </div>
-                                    <div class="commentImageWrapper">
-                                        @foreach ($comment->images as $commentimages)
-                                            <a href="{{ asset('storage/' . $commentimages->image_path) }}"
-                                                target="_blank">
-                                                <img src="{{ asset('storage/' . $commentimages->image_path) }}"
-                                                    alt=""
-                                                    style="height: 60px; width: 60px; margin: 5px; cursor; pointer;">
-                                            </a>
-                                        @endforeach
-                                    </div>
+                        </div>
+                        <h6>Details</h6>
+                        <p id="modalTicketMessage" style="color: white;">{{ $ticket->message }}</p>
+                        <div id="modalTicketImages" class="d-flex flex-wrap">
+                            @foreach ($ticket->images as $image)
+                                <div style="position: relative; margin: 5px;">
+                                    <a href="{{ asset('storage/' . $image->image_path) }}" target="_blank">
+                                        <img src="{{ asset('storage/' . $image->image_path) }}"
+                                            style="width: 100px; height: 100px; margin: 5px; cursor: pointer;">
+                                    </a>
                                 </div>
                             @endforeach
-                        @endif
+                            @if ($ticket->images->isEmpty())
+                                <p>No images uploaded.</p>
+                            @endif
+                        </div>
+                        <div class="border-line"></div>
+                        <h5><b>Comments</b></h5>
+                        <div class="commentWrapper">
+                            <form action="{{ route('tickets.addComment', $ticket->id) }}" method="POST"
+                                enctype="multipart/form-data">
+                                @csrf
+                                <div class="commentUserDetails">
+                                    <img class="avatar" src="{{ asset('black') }}/img/default-avatar.png"
+                                        alt="">
+                                    <p><b>{{ auth()->user()->name }}</b></p>
+                                </div>
+                                <div class="form-group">
+                                    <textarea class="form-control" id="message" name="comment" placeholder="Enter your message here" required></textarea>
+                                </div>
+                                <div class="commentButtonGroup">
+                                    <div class="form-group" style="margin-top: 5px;">
+                                        <input style="border: 1px solid red;" type="file" id="imageUpload"
+                                            name="images[]" accept="image/*" multiple onchange="previewImages()"><i
+                                            class="tim-icons icon-image-02"></i></input>
+                                    </div>
+                                    <div class="sendimagebutton">
+                                        <div class="buttonwrapper">
+                                            <div class="buttonGroup">
+                                                <button type="submit"
+                                                    class="btn btn-success btn-sm btn-round btn-icon">
+                                                    <i class="tim-icons icon-send"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="imagePreview" class="d-flex flex-wrap"></div>
+                            </form>
+                        </div>
+                        <div class="listOfComments">
+                            @if ($ticket->comments->isEmpty())
+                                <p>No comments yet.</p>
+                            @else
+                                @foreach ($ticket->comments as $comment)
+                                    <div class="commentWrapper"
+                                        style="border: 1px solid #32325d; margin: 10px 0; display: flex; justify-content: space-between;">
+                                        <div class="commentUserWrapper">
+                                            <div class="commentUserDetails">
+                                                <img class="avatar" src="{{ asset('black') }}/img/default-avatar.png"
+                                                    alt="">
+                                                <p><b>{{ $comment->user_name }}</b></p>
+                                                <p style="color: #5e72e4; ">{{ $comment->created_at->diffForHumans() }}
+                                                </p>
+                                            </div>
+                                            <p style="margin:0 35px; color: white;">
+                                                {{ $comment->comment }}</p>
+                                        </div>
+                                        <div class="commentImageWrapper">
+                                            @foreach ($comment->images as $commentimages)
+                                                <a href="{{ asset('storage/' . $commentimages->image_path) }}"
+                                                    target="_blank">
+                                                    <img src="{{ asset('storage/' . $commentimages->image_path) }}"
+                                                        alt=""
+                                                        style="height: 60px; width: 60px; margin: 5px; cursor; pointer;">
+                                                </a>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</body>
+
 
 <style>
     .commentButtonGroup {
         display: flex;
+        justify-content: space-between;
+        margin: 0 10px;
+        /* border: 1px solid red; */
     }
 
     .listOfComments p {

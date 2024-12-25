@@ -6,7 +6,7 @@
             <img src="{{ asset('images/bailogo.png') }}" style="width: 100px; height: auto;" alt="BAI LOGO">
         </div>
         <ul class="nav">
-            <li @if ($pageSlug == 'userlist') class="active " @endif>
+            {{-- <li @if ($pageSlug == 'userlist') class="active " @endif>
                 <a href="{{ route('user.list') }}">
                     <i class="tim-icons icon-single-02"></i>
                     <p>{{ __('List of Users') }}</p>
@@ -17,7 +17,7 @@
                     <i class="tim-icons icon-laptop"></i>
                     <p>{{ __('Tickets Ongoing') }}</p>
                 </a>
-            </li>
+            </li> --}}
             <li @if ($pageSlug == 'inputticket') class="active " @endif>
                 <a href="{{ route('inputticket') }}">
                     <i class="tim-icons icon-minimal-right"></i>
