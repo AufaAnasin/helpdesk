@@ -24,14 +24,29 @@
                                     <label for="message">Message</label>
                                     <textarea class="form-control" id="message" name="message" placeholder="Enter your message here" required></textarea>
                                 </div>
-                                <div class="form-group">
-                                    <label for="imageUpload">Upload Images (Max 7)</label>
-                                    <div id="drop-area" class="drop-area">
-                                        <p>Drag & drop your images here or click to select</p>
-                                        <input type="file" id="imageUpload" name="images[]" multiple accept="image/*"
-                                            style="display: none;">
+                                <div class="row priority-uploadimages">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="exampleFormControlSelect1">Priority</label>
+                                            <select class="form-control" id="priority" name="priority" required>
+                                                <option value="low">Low</option>
+                                                <option value="medium">Medium</option>
+                                                <option value="high">High</option>
+                                                <option value="verry_high">Verry High</option>
+                                            </select>
+                                        </div>
                                     </div>
-                                    <small class="form-text text-muted">You can upload up to 7 images.</small>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="imageUpload">Upload Images (Max 7)</label>
+                                            <div id="drop-area" class="drop-area">
+                                                <p>Drag & drop your images here or click to select</p>
+                                                <input type="file" id="imageUpload" name="images[]" multiple
+                                                    accept="image/*" style="display: none;">
+                                            </div>
+                                            <small class="form-text text-muted">You can upload up to 7 images.</small>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div id="image-preview" class="image-preview"></div>
@@ -47,6 +62,7 @@
 
 
     <style>
+
         .drop-area {
             border: 2px dashed #2b3553;
             border-radius: 5px;

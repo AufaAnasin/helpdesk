@@ -26,6 +26,7 @@
                                             <th>Title</th>
                                             <th>Message</th>
                                             <th>Status</th>
+                                            <th>Priority</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -52,9 +53,25 @@
                                                     </span>
                                                 </td>
                                                 <td>
+                                                    <span class="priority-badge {{ strtolower($ticket->priority) }}">
+                                                        @if ($ticket->priority == 'low')
+                                                            Low
+                                                        @elseif ($ticket->priority == 'medium')
+                                                            Medium
+                                                        @elseif ($ticket->priority == 'high')
+                                                            High
+                                                        @elseif ($ticket->priority == 'verry_high')
+                                                            Very High
+                                                        @else
+                                                            Unknown Priority
+                                                        @endif
+                                                    </span>
+                                                </td>
+                                                <td>
                                                     {{-- Button for ticket details modal --}}
+                                                    {{-- ticket detail button --}}
                                                     <button type="button" class="btn btn-info btn-link btn-icon btn-sm"
-                                                        onclick="openTicketDetailModal({{ json_encode($ticket) }})">
+                                                        onclick="goToTicketDetail({{ $ticket->id }})">
                                                         <i class="tim-icons icon-single-02"></i>
                                                     </button>
                                                     <button type="button" class="btn btn-success btn-link btn-icon btn-sm">
@@ -96,50 +113,9 @@
     @endif
 
     <script>
-        function openTicketDetailModal(ticket) {
-            const modal = document.getElementById('ticketDetailModal');
-            document.getElementById('modalTicketTitle').textContent = ticket.title;
-            document.getElementById('modalTicketMessage').textContent = ticket.message;
-
-            // Set the ticket ID and status
-            const ticketId = ticket.id;
-            const ticketStatus = ticket.status;
-
-            // Update the dropdown button text
-            const dropdownButton = document.getElementById('dropdownMenuButton');
-            dropdownButton.textContent = ticketStatus.charAt(0).toUpperCase() + ticketStatus.slice(1);
-            dropdownButton.setAttribute('data-ticket-id', ticketId);
-
-            // Clear previous images
-            const modalTicketImages = document.getElementById('modalTicketImages');
-            modalTicketImages.innerHTML = '';
-
-            // Populate images
-            if (ticket.images && ticket.images.length > 0) {
-                ticket.images.forEach(image => {
-                    const imgDiv = document.createElement('div');
-                    imgDiv.style.position = 'relative';
-                    imgDiv.style.margin = '5px';
-
-                    const img = document.createElement('img');
-                    img.src = `/storage/${image.image_path}`; // Adjust the path as necessary
-                    img.style.width = '100px';
-                    img.style.height = 'auto';
-                    img.style.cursor = 'pointer';
-                    img.onclick = function() {
-                        openImageInNewTab(img.src); // Open image in new tab on click
-                    };
-
-                    imgDiv.appendChild(img);
-                    modalTicketImages.appendChild(imgDiv);
-                });
-            } else {
-                modalTicketImages.innerHTML = '<p>No images uploaded.</p>';
-            }
-
-            // Show the modal
-            modal.style.display = 'block';
-            modal.classList.add('show');
+        function goToTicketDetail(ticketId) {
+            // Redirect to the ticket detail page
+            window.location.href = '{{ url('/tickets') }}/' + ticketId;
         }
 
         function closeTicketDetailModal() {
@@ -151,6 +127,43 @@
         }
     </script>
     <style>
+        .priority-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            /* Oval shape */
+            color: white;
+            font-weight: bold;
+            /* Bold text */
+        }
+
+        .priority-badge.low {
+            background-color: #28a745;
+            /* Green for Low */
+        }
+
+        .priority-badge.medium {
+            background-color: #ffc107;
+            /* Yellow for Medium */
+            color: #212529;
+            /* Dark text for contrast */
+        }
+
+        .priority-badge.high {
+            background-color: #fd7e14;
+            /* Orange for High */
+        }
+
+        .priority-badge.verry_high {
+            background-color: #dc3545;
+            /* Red for Very High */
+        }
+
+        .priority-badge.unknown {
+            background-color: #6c757d;
+            /* Gray for Unknown */
+        }
+
         .tickets-header {
             display: flex;
             justify-content: space-between;

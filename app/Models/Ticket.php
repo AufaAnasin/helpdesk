@@ -14,7 +14,8 @@ class Ticket extends Model
         'title',
         'message',
         'status',
-        'user_name'
+        'user_name',
+        'priority'
     ];
 
     // Define the relationship with TicketImage

@@ -87,6 +87,12 @@ class PageController extends Controller
         return view('pages.typography');
     }
 
+    public function registerassets()
+    {   
+        $pageSlug = 'register-assets';
+        return view('assetsmanagement.assetsregister', compact('pageSlug'));
+    }
+
     /**
      * Display upgrade page
      *
