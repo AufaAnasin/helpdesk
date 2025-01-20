@@ -31,8 +31,11 @@
                         <div class="form-group">
                             <label for="role" class="text-light">User Role</label>
                             <select class="form-control" id="role" name="role" required>
-                                <option value="Client">Client</option>
-                                <option value="Admin">Admin</option>
+                                <option value="Admin">Superuser</option>
+                                <option value="Client">IT Officer</option>
+                                <option value="Admin">IT Manager</option>
+                                <option value="Client">Users</option>
+                                <option value="Admin">Superordinate</option>
                             </select>
                         </div>
                         <div class="button-container">

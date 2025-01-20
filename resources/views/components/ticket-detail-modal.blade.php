@@ -14,8 +14,8 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="ticketTitleHead">
-                            <div class="ticketTitle">
-                                <h4 style="color: white;"><b>[Ticket #{{ $ticket->id }}]</b></h4>
+                            <div class="ticketTitleContainer">
+                                <h4 id="modalTicketId" style="color: white;"><b>[Ticket #{{ $ticket->id }}]</b></h4>
                                 <h4 id="modalTicketTitle"> {{ $ticket->title }}</h4>
                             </div>
                             <div class="buttontitlegroup">
@@ -86,12 +86,15 @@
                                 <div id="imagePreview" class="d-flex flex-wrap"></div>
                             </form>
                         </div>
-                        <div class="listOfComments">
+                        <div>
+                            {{-- {{ dd($ticket->comments) }} <!-- This will dump the comments and stop execution --> --}}
                             @if ($ticket->comments->isEmpty())
-                                <p>No comments yet.</p>
+                                <div class="noComments" style="margin-top: 10px; text-align: center;">
+                                    <p style="color: white;">No comments yet</p>
+                                </div>
                             @else
                                 @foreach ($ticket->comments as $comment)
-                                    <div class="commentWrapper"
+                                    {{-- <div class="commentWrapper"
                                         style="border: 1px solid #32325d; margin: 10px 0; display: flex; justify-content: space-between;">
                                         <div class="commentUserWrapper">
                                             <div class="commentUserDetails">
@@ -114,7 +117,10 @@
                                                 </a>
                                             @endforeach
                                         </div>
-                                    </div>
+                                    </div> --}}
+                                    <p style="color: white;">Comment Id: {{ $comment->id }}</p>
+                                    <p style="color: white;">Ticket Id: {{ $comment->ticket_id }}</p>
+                                    <p style="color: white;">Ticket Id: {{ $comment->comment }}</p>
                                 @endforeach
                             @endif
                         </div>

@@ -32,6 +32,7 @@ class TicketController extends Controller
                 'title' => $request->title,
                 'message' => $request->message,
                 'status' => 'open', // Default status
+                'priority' => $request->priority,
             ]);
     
             // Handle image uploads
@@ -77,7 +78,7 @@ class TicketController extends Controller
     public function show($id)
     {
         $ticket = Ticket::with(['images', 'comments'])->findOrFail($id);
-        return view('ticket.show', compact('ticket'));
+        return view('tickets.detail', compact('ticket'));
     }
 
     public function destroy($id)
