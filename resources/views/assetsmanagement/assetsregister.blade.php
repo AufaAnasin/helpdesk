@@ -9,136 +9,140 @@
     <body>
         <div class="card">
             <div class="card-body">
-                <h4>Register Assets</h4>
-                {{-- Asset Type      --}}
-                <div class="contentWrapper">
-                    <div class="inputWrapper">
-                        <div class="textContainer">
-                            <h5><b>Asset Type</b></h5>
-                            <p>Do deserunt do consectetur cupidatat anim commodo ea qui ani</p>
-                        </div>
-                        <div class="inputContainer">
-                            <input type="checkbox" id="toggle" class="toggleCheckbox" />
-                            <label for="toggle" class='toggleContainer'>
-                                <div>Software</div>
-                                <div>Hardware</div>
-                            </label>
-                            <input type="hidden" id="selectedValue" name="selectedValue" value="Software">
-                        </div>
-                    </div>
-                    <div class="borderLine"></div>
-                </div>
-                {{-- Asset Details      --}}
-                <div class="contentWrapper">
-                    <div class="inputWrapper">
-                        <div class="textContainer">
-                            <h5><b>Asset Details</b></h5>
-                            <p>Veniam magna id ut pariatur cillum veniam occaecat eu Conse.</p>
-                        </div>
-                        <div class="inputContainer">
-                            <div class="form-group">
-                                <label for="inputState">Brand</label>
-                                <select id="inputState" class="form-control">
-                                    <option selected>Microsoft</option>
-                                    <option>Zoom</option>
-                                    <option>Foxit</option>
-                                    <option>Autodesk</option>
-                                </select>
+                <form method="POST" action="{{ route('assetsmanagement.store') }}" enctype="multipart/form-data">
+                    @csrf
+                    <h4>Register Assets</h4>
+                    {{-- Asset Type      --}}
+                    <div class="contentWrapper">
+                        <div class="inputWrapper">
+                            <div class="textContainer">
+                                <h5><b>Asset Type</b></h5>
+                                <p>Do deserunt do consectetur cupidatat anim commodo ea qui ani</p>
                             </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Product Name</label>
-                                <input type="email" class="form-control" id="exampleInputEmail1"
-                                    aria-describedby="emailHelp" placeholder="Product Name..." required>
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Product Number</label>
-                                <input type="email" class="form-control" id="exampleInputEmail1"
-                                    aria-describedby="emailHelp" placeholder="Product Number..." required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="borderLine"></div>
-                </div>
-                {{-- Asset Timestamp --}}
-                <div class="contentWrapper">
-                    <div class="inputWrapper">
-                        <div class="textContainer">
-                            <h5><b>Assets Timestamp</b></h5>
-                            <p>Veniam magna id ut pariatur cillum veniam occaecat eu Conse.</p>
-                        </div>
-                        <div class="inputContainer">
-                            <label for="exampleInputEmail1">Dates Purchased</label>
-                            <div class="input-group">
-
-                                <div class="input-group-prepend">
-
-                                    <div class="input-group-text">
-                                        <i class="tim-icons icon-calendar-60"></i>
-                                    </div>
-                                </div>
-                                <input type="date" class="form-control" placeholder="With Nucleo Icons">
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Price</label>
-                                <input type="number" class="form-control" id="exampleInputEmail1"
-                                    aria-describedby="emailHelp" placeholder="Price.." required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="borderLine"></div>
-                </div>
-                {{-- Additional Information --}}
-                <div class="contentWrapper">
-                    <div class="inputWrapper">
-                        <div class="textContainer">
-                            <h5><b>Additional Information</b></h5>
-                            <p>Veniam magna id ut pariatur cillum veniam occaecat eu Conse.</p>
-                        </div>
-                        <div class="inputContainer">
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Notes</label>
-                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Person In Charge</label>
-                                <input type="text" class="form-control" id="exampleInputEmail1"
-                                    aria-describedby="emailHelp" placeholder="Person In Charge" required>
-                            </div>
-                            <div class="form-group" id="hardwareLocationField" style="display: none;">
-                                <label for="hardwareLocation">Hardware Location</label>
-                                <input type="text" class="form-control" id="hardwareLocation"
-                                    placeholder="Enter Hardware Location">
-                            </div>
-                            <div class="form-group">
-                                <div class="form-group">
-                                    <label for="fileUpload">Additional Files (Max 4 files, 5MB each)</label>
-                                    <div id="fileUpload" class="file-upload-area" ondragover="event.preventDefault();"
-                                        ondrop="handleFileDrop(event)">
-                                        <p>Drag & drop files here or click to upload</p>
-                                        <input type="file" id="fileInput" multiple accept=".jpg,.png,.pdf"
-                                            style="display: none;" onchange="handleFiles(this.files)">
-                                        <button type="button"
-                                            onclick="document.getElementById('fileInput').click();">Choose Files</button>
-                                    </div>
-                                    <ul id="fileList"></ul>
-                                </div>
-                                {{-- please put File Upload Placeholder that can be drag and drop, with maximum 4 files and 5MB and also can see the list of file that already uploaded --}}
-                            </div>
-                            <div class="form-check" id="isBorrowAbleCheckbox" style="display: none;">
-                                <label class="form-check-label">
-                                    <input class="form-check-input" type="checkbox" value="">
-                                    Is Borrowable?
-                                    <span class="form-check-sign">
-                                        <span class="check"></span>
-                                    </span>
+                            <div class="inputContainer">
+                                <input type="checkbox" id="toggle" class="toggleCheckbox" />
+                                <label for="toggle" class='toggleContainer'>
+                                    <div>Software</div>
+                                    <div>Hardware</div>
                                 </label>
+                                <input type="hidden" id="selectedValue" name="asset_type" value="Software">
                             </div>
-                            <div style="display: flex; justify-content: flex-end;">
-                                <button type="button" class="btn btn-info">Submit</button>
+                        </div>
+                        <div class="borderLine"></div>
+                    </div>
+                    {{-- Asset Details      --}}
+                    <div class="contentWrapper">
+                        <div class="inputWrapper">
+                            <div class="textContainer">
+                                <h5><b>Asset Details</b></h5>
+                                <p>Veniam magna id ut pariatur cillum veniam occaecat eu Conse.</p>
+                            </div>
+                            <div class="inputContainer">
+                                <div class="form-group">
+                                    <label for="inputState">Brand</label>
+                                    <select id="inputState" class="form-control" name="brand">
+                                        <option selected>Microsoft</option>
+                                        <option value="Zoom">Zoom</option>
+                                        <option value="Foxit">Foxit</option>
+                                        <option value="Autodesk">Autodesk</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Product Name</label>
+                                    <input type="text" class="form-control" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp" name="product_name" placeholder="Product Name..." required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Product Number</label>
+                                    <input type="text" class="form-control" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp" name="product_number" placeholder="Product Number..." required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="borderLine"></div>
+                    </div>
+                    {{-- Asset Timestamp --}}
+                    <div class="contentWrapper">
+                        <div class="inputWrapper">
+                            <div class="textContainer">
+                                <h5><b>Assets Timestamp</b></h5>
+                                <p>Veniam magna id ut pariatur cillum veniam occaecat eu Conse.</p>
+                            </div>
+                            <div class="inputContainer">
+                                <label for="exampleInputEmail1">Dates Purchased</label>
+                                <div class="input-group">
+
+                                    <div class="input-group-prepend">
+
+                                        <div class="input-group-text">
+                                            <i class="tim-icons icon-calendar-60"></i>
+                                        </div>
+                                    </div>
+                                    <input type="date" class="form-control" name="date_purchased" placeholder="With Nucleo Icons">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Price</label>
+                                    <input type="number" class="form-control" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp" placeholder="Price.." name="price" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="borderLine"></div>
+                    </div>
+                    {{-- Additional Information --}}
+                    <div class="contentWrapper">
+                        <div class="inputWrapper">
+                            <div class="textContainer">
+                                <h5><b>Additional Information</b></h5>
+                                <p>Veniam magna id ut pariatur cillum veniam occaecat eu Conse.</p>
+                            </div>
+                            <div class="inputContainer">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Notes</label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" name="notes" rows="3"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Person In Charge</label>
+                                    <input type="text" class="form-control" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp" name="person_in_charge" placeholder="Person In Charge" required>
+                                </div>
+                                <div class="form-group" id="hardwareLocationField" style="display: none;">
+                                    <label for="hardwareLocation">Hardware Location</label>
+                                    <input type="text" class="form-control" id="hardwareLocation" name="hardware_location"
+                                        placeholder="Enter Hardware Location">
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        <label for="fileUpload">Additional Files (Max 4 files, 5MB each)</label>
+                                        <div id="fileUpload" class="file-upload-area" ondragover="event.preventDefault();"
+                                            ondrop="handleFileDrop(event)">
+                                            <p>Drag & drop files here or click to upload</p>
+                                            <input type="file" id="fileInput" name="uploaded_files[]" multiple accept=".jpg,.png,.pdf"
+                                                style="display: none;" onchange="handleFiles(this.files)">
+                                            <button type="button"
+                                                onclick="document.getElementById('fileInput').click();">Choose
+                                                Files</button>
+                                        </div>
+                                        <ul id="fileList"></ul>
+                                    </div>
+                                    {{-- please put File Upload Placeholder that can be drag and drop, with maximum 4 files and 5MB and also can see the list of file that already uploaded --}}
+                                </div>
+                                <div class="form-check" id="isBorrowAbleCheckbox" style="display: none;">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" name="is_borrowable" value="1">
+                                        Is Borrowable?
+                                        <span class="form-check-sign">
+                                            <span class="check"></span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div style="display: flex; justify-content: flex-end;">
+                                    <button type="submit" class="btn btn-info">Submit</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </body>

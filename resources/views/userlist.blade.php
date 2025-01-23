@@ -11,7 +11,7 @@
 
         <x-modal-component />
 
-        <table class="table">
+        <table class="table-responsive">
             <thead>
                 <tr>
                     <th>ID</th>

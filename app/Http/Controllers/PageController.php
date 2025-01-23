@@ -87,10 +87,23 @@ class PageController extends Controller
         return view('pages.typography');
     }
 
+    // assets page
+
     public function registerassets()
     {   
         $pageSlug = 'register-assets';
         return view('assetsmanagement.assetsregister', compact('pageSlug'));
+    }
+
+    public function assetslist()
+    {   
+        $pageSlug = 'assets-list';
+        return view('assetsmanagement.assetslist', compact('pageSlug'));
+    }
+
+    public function assetDetail() {
+        $pageSlug = 'assets-list';
+        return view('assetsmanagement.assetsdetail', compact('pageSlug'));
     }
 
     /**

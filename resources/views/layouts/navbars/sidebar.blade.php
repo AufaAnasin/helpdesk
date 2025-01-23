@@ -91,8 +91,8 @@
                                 <p>{{ __('Requested Assets List') }}</p>
                             </a>
                         </li>
-                        <li @if ($pageSlug == 'user-tickets') class="active " @endif>
-                            <a href="{{ route('user.tickets') }}">
+                        <li @if ($pageSlug == 'assets-list') class="active " @endif>
+                            <a href="{{ route('assetsmanagement.assetslist') }}">
                                 <p>{{ __('Assets List') }}</p>
                             </a>
                         </li>

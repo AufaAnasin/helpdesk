@@ -22,11 +22,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('inputticket', ['as' => 'inputticket', 'uses' => 'App\Http\Controllers\PageController@inputticket']); // Admin and Client
     Route::get('/user-tickets', ['as' => 'user.tickets', 'uses' => 'App\Http\Controllers\TicketController@userTickets'])->middleware('auth'); // Admin and Client
 
-
-
-    // Assets Register
+    // Assets Management
     Route::get('/register-assets', ['as' => 'assetsmanagement.assetsregister', 'uses' => 'App\Http\Controllers\PageController@registerassets']); // Admin only
-
+    Route::post('/register-assets', ['as' => 'assetsmanagement.store', 'uses' => 'App\Http\Controllers\AssetController@store']); // Admin only
+    Route::get('/assets-list', ['as' => 'assetsmanagement.assetslist', 'uses' => 'App\Http\Controllers\PageController@assetslist']); // Admin only
+    Route::get('/assets-list', ['as' => 'assetsmanagement.assetslist', 'uses' => 'App\Http\Controllers\AssetController@assetsLists']); // Admin only
+    Route::get('/search-assets', ['as' => 'assetsmanagement.searchAssets', 'uses' => 'App\Http\Controllers\AssetController@searchAssets']); // Admin only
+    Route::get('/asset-detail', ['as' => 'assetsmanagement.assetDetail', 'uses' => 'App\Http\Controllers\PageController@assetDetail']); // Admin only
 
     // User CRUD
     Route::post('/users', ['as' => 'users.store', 'uses' => 'App\Http\Controllers\UserController@store']); // Admin only
@@ -38,8 +40,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/tickets', ['as' => 'tickets.list', 'uses' => 'App\Http\Controllers\TicketController@index']); // Admin only
     Route::get('/tickets/{id}', ['as' => 'tickets.show', 'uses' => 'App\Http\Controllers\TicketController@show']); // Admin and Client
     Route::get('/user-tickets', ['as' => 'user.tickets', 'uses' => 'App\Http\Controllers\TicketController@userTickets'])->middleware('auth');
-    
-
     Route::delete('/tickets/{id}', ['as' => 'tickets.destroy', 'uses' => 'App\Http\Controllers\TicketController@destroy']); // Admin only
     Route::patch('/tickets/{id}/status', ['as' => 'tickets.updateStatus', 'uses' => 'App\Http\Controllers\TicketController@updateStatus']); // Admin only
 
