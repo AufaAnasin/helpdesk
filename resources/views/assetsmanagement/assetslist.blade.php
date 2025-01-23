@@ -35,7 +35,7 @@
                                     <tbody>
                                         @foreach ($assets as $asset)
                                             <tr>
-                                                <td>IT/ASSETS-{{ $asset->id }}</td>
+                                                <td>{{ $asset->id }}</td>
                                                 <td>{{ $asset->asset_type }}</td>
                                                 <td>{{ $asset->brand }}</td>
                                                 <td>{{ $asset->product_name }}</td>

@@ -24,6 +24,7 @@ class AssetController extends Controller
                 'person_in_charge' => 'required|string',
                 'hardware_location' => 'nullable|string',
                 'is_borrowable' => 'nullable|boolean',
+                'status' => 'Not Defined',
                 'uploaded_files.*' => 'nullable|file|max:30720|mimes:jpg,png,pdf',
             ]);
 
@@ -41,6 +42,8 @@ class AssetController extends Controller
                     return $file->store('uploads', 'public');
                 })->toArray();
             }
+            $validated['status'] = $request->input('status', 'active');
+            $validated['id'] = 'IT/ASSETS-' . mt_rand(100000000000, 999999999999); // Random 12-digit number
 
             // Create asset
             Asset::create($validated);

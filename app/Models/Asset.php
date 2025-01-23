@@ -28,4 +28,7 @@ class Asset extends Model
     protected $casts = [
         'uploaded_files' => 'array',
     ];
+    protected $attributes = [
+        'status' => 'active',
+    ];
 }
