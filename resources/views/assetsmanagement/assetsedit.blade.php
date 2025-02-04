@@ -102,30 +102,34 @@
             <div class="col">
                 <h6><b>Edit History List</b></h6>
                 <div class="card">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th class="text-center">ID</th>
-                                <th>Person In Charge</th>
-                                <th>Status</th>
-                                <th>Notes</th>
-                                <th class="text-right">Edited By</th>
-                                <th class="text-center">Edited At</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($logs as $log)
-                                <tr>
-                                    <td class="text-center">{{ $log->id }}</td>
-                                    <td>{{ $log->person_in_charge }}</td>
-                                    <td>{{ $log->status }}</td>
-                                    <td>{{ $log->notes }}</td>
-                                    <td class="text-right">{{ $log->editor->name ?? 'Unknown' }}</td>
-                                    <td class="text-right">{{ $log->created_at->format('Y-m-d H:i:s') }}</td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table w-100">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">ID</th>
+                                        <th>Person In Charge</th>
+                                        <th>Status</th>
+                                        <th>Notes</th>
+                                        <th class="text-right">Edited By</th>
+                                        <th class="text-center">Edited At</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($logs as $log)
+                                        <tr>
+                                            <td class="text-center">{{ $log->id }}</td>
+                                            <td>{{ $log->person_in_charge }}</td>
+                                            <td>{{ $log->status }}</td>
+                                            <td>{{ $log->notes }}</td>
+                                            <td class="text-right">{{ $log->editor->name ?? 'Unknown' }}</td>
+                                            <td class="text-right">{{ $log->created_at->format('Y-m-d H:i:s') }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

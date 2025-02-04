@@ -30,6 +30,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/asset-detail', ['as' => 'assetsmanagement.getDetailById', 'uses' => 'App\Http\Controllers\AssetController@getDetailById']);// for showing the detail of the asset
     Route::get('/asset-edit', ['as' => 'assetsmanagement.assetsedit', 'uses' => 'App\Http\Controllers\AssetController@editAssets']);
     Route::post('/asset-edit/update', ['as' => 'assetsmanagement.updateAssets', 'uses' => 'App\Http\Controllers\AssetController@updateAssets']);
+    Route::get('/request-assets', ['as' => 'assetsmanagement.requestAssets', 'uses' => 'App\Http\Controllers\AssetController@requestAssets']);
     
     // User CRUD
     Route::post('/users', ['as' => 'users.store', 'uses' => 'App\Http\Controllers\UserController@store']); // Admin only

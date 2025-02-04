@@ -9,7 +9,8 @@
     <body>
         <div class="container-fluid">
             <div class="breadcumb">
-                <p><a href="{{ route('assetsmanagement.assetslist') }}">Asset List</a> <i class="tim-icons   icon-minimal-right"></i> Asset Detail </p> 
+                <p><a href="{{ route('assetsmanagement.assetslist') }}">Asset List</a> <i
+                        class="tim-icons   icon-minimal-right"></i> Asset Detail </p>
             </div>
             <div class="row identity">
                 <div class="col">
@@ -90,7 +91,7 @@
                     </div>
                     <div class="additionalinfo-buttongroup">
 
-                        <a href={{ route('assetsmanagement.assetsedit', ['id'=>$asset->id]) }}>
+                        <a href={{ route('assetsmanagement.assetsedit', ['id' => $asset->id]) }}>
                             <button style="margin-top: 10px;" type="button" class="btn btn-success">Edit</button>
                         </a>
 
@@ -234,6 +235,10 @@
             .additionalinfo {
                 display: flex;
                 flex-direction: column;
+            }
+
+            .productSerialNumber b {
+                font-size: 18px;
             }
         }
     </style>

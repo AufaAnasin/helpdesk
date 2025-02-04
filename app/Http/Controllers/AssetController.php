@@ -181,4 +181,9 @@ class AssetController extends Controller
             return redirect()->back()->with('error', 'An unexpected error occurred while updating the asset. Please try again later.');
         }
     }
+
+    public function requestAssets(){
+        $pageSlug = 'request-assets';
+        return view('assetsmanagement.assetrequest', compact('pageSlug'));
+    }
 }
