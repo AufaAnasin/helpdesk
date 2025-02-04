@@ -81,12 +81,12 @@
                                 <p style="margin-top: 2px;">{{ __('Register Assets') }}</p>
                             </a>
                         </li>
-                        {{-- <li @if ($pageSlug == 'inputticket') class="active " @endif>
-                            <a href="{{ route('inputticket') }}">
+                        <li @if ($pageSlug == 'request-assets') class="active " @endif>
+                            <a href="{{ route('assetsmanagement.requestAssets') }}">
                                 <p style="margin-top: 2px;">{{ __('Request Assets') }}</p>
                             </a>
                         </li>
-                        <li @if ($pageSlug == 'user-tickets') class="active " @endif>
+                        {{-- <li @if ($pageSlug == 'user-tickets') class="active " @endif>
                             <a href="{{ route('user.tickets') }}">
                                 <p style="margin-top: 2px;">{{ __('Requested Assets List') }}</p>
                             </a>
