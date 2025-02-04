@@ -62,9 +62,8 @@
                                                         </button>
                                                         <div class="dropdown-menu dropdown-menu-right" 
                                                             aria-labelledby="dropdownMenuButton">
-                                                            <a class="dropdown-item" href="#">Detail</a>
-                                                            <a class="dropdown-item" href="#">Edit</a>
-                                                            <a class="dropdown-item" href="#">Delete</a>
+                                                            {{-- <a class="dropdown-item" href="{{ url(`/asset-detail?id=` . $asset->asset_id) }}">Detail</a> --}}
+                                                            <a class="dropdown-item" href="{{ route('assetsmanagement.getDetailById', ['id' => $asset->id]) }}">Detail</a>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -158,7 +157,7 @@
                     data.forEach(asset => {
                         const row = `
                             <tr>
-                                <td>IT/ASSETS-${asset.id}</td>
+                                <td>${asset.id}</td>
                                 <td>${asset.asset_type}</td>
                                 <td>${asset.brand}</td>
                                 <td>${asset.product_name}</td>
@@ -177,9 +176,7 @@
                                         </button>
                                         <div class="dropdown-menu dropdown-menu-right" 
                                             aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" href="#">Detail</a>
-                                            <a class="dropdown-item" href="#">Edit</a>
-                                            <a class="dropdown-item" href="#">Delete</a>
+                                            <a class="dropdown-item" href="{{ route('assetsmanagement.getDetailById', ['id' => $asset->id]) }}">Detail</a>
                                         </div>
                                     </div>
                                 </td>

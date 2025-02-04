@@ -23,13 +23,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/user-tickets', ['as' => 'user.tickets', 'uses' => 'App\Http\Controllers\TicketController@userTickets'])->middleware('auth'); // Admin and Client
 
     // Assets Management
-    Route::get('/register-assets', ['as' => 'assetsmanagement.assetsregister', 'uses' => 'App\Http\Controllers\PageController@registerassets']); // Admin only
-    Route::post('/register-assets', ['as' => 'assetsmanagement.store', 'uses' => 'App\Http\Controllers\AssetController@store']); // Admin only
-    Route::get('/assets-list', ['as' => 'assetsmanagement.assetslist', 'uses' => 'App\Http\Controllers\PageController@assetslist']); // Admin only
-    Route::get('/assets-list', ['as' => 'assetsmanagement.assetslist', 'uses' => 'App\Http\Controllers\AssetController@assetsLists']); // Admin only
-    Route::get('/search-assets', ['as' => 'assetsmanagement.searchAssets', 'uses' => 'App\Http\Controllers\AssetController@searchAssets']); // Admin only
-    Route::get('/asset-detail', ['as' => 'assetsmanagement.assetDetail', 'uses' => 'App\Http\Controllers\PageController@assetDetail']); // Admin only
-
+    Route::get('/register-assets', ['as' => 'assetsmanagement.assetsregister', 'uses' => 'App\Http\Controllers\PageController@registerassets']); // for generate view of the asset register
+    Route::post('/register-assets', ['as' => 'assetsmanagement.store', 'uses' => 'App\Http\Controllers\AssetController@store']); // for create the asset
+    Route::get('/assets-list', ['as' => 'assetsmanagement.assetslist', 'uses' => 'App\Http\Controllers\AssetController@assetsLists']); // for fetching the data
+    Route::get('/search-assets', ['as' => 'assetsmanagement.searchAssets', 'uses' => 'App\Http\Controllers\AssetController@searchAssets']);  // for searching the data
+    Route::get('/asset-detail', ['as' => 'assetsmanagement.getDetailById', 'uses' => 'App\Http\Controllers\AssetController@getDetailById']);// for showing the detail of the asset
+    Route::get('/asset-edit', ['as' => 'assetsmanagement.assetsedit', 'uses' => 'App\Http\Controllers\AssetController@editAssets']);
+    Route::post('/asset-edit/update', ['as' => 'assetsmanagement.updateAssets', 'uses' => 'App\Http\Controllers\AssetController@updateAssets']);
+    
     // User CRUD
     Route::post('/users', ['as' => 'users.store', 'uses' => 'App\Http\Controllers\UserController@store']); // Admin only
     Route::get('/userlist', ['as' => 'user.list', 'uses' => 'App\Http\Controllers\UserController@listUsers']); // Admin only

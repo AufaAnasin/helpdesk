@@ -100,11 +100,7 @@ class PageController extends Controller
         $pageSlug = 'assets-list';
         return view('assetsmanagement.assetslist', compact('pageSlug'));
     }
-
-    public function assetDetail() {
-        $pageSlug = 'assets-list';
-        return view('assetsmanagement.assetsdetail', compact('pageSlug'));
-    }
+    
 
     /**
      * Display upgrade page

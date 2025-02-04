@@ -9,7 +9,7 @@
             <li @if ($pageSlug == 'userlist') class="active " @endif>
                 <a href="{{ route('user.list') }}">
                     <i class="tim-icons icon-single-02"></i>
-                    <p>{{ __('List of Users') }}</p>
+                    <p style="margin-top: 2px;">{{ __('List of Users') }}</p>
                 </a>
             </li>
             {{-- Troubleshooting --}}
@@ -24,17 +24,17 @@
                         <li @if ($pageSlug == 'tickets') class="active " @endif>
                             <a href="{{ route('tickets.list') }}">
                   
-                                <p>{{ __('Tickets Ongoing') }}</p>
+                                <p style="margin-top: 2px;">{{ __('Tickets Ongoing') }}</p>
                             </a>
                         </li>
                         <li @if ($pageSlug == 'inputticket') class="active " @endif>
                             <a href="{{ route('inputticket') }}">
-                                <p>{{ __('Input Ticket') }}</p>
+                                <p style="margin-top: 2px;">{{ __('Input Ticket') }}</p>
                             </a>
                         </li>
                         <li @if ($pageSlug == 'user-tickets') class="active " @endif>
                             <a href="{{ route('user.tickets') }}">
-                                <p>{{ __('My Tickets') }}</p>
+                                <p style="margin-top: 2px;">{{ __('My Tickets') }}</p>
                             </a>
                         </li>
                     </ul>
@@ -78,22 +78,24 @@
                     <ul class="nav pl-4">
                         <li @if ($pageSlug == 'register-assets') class="active " @endif>
                             <a href="{{ route('assetsmanagement.assetsregister') }}">
-                                <p>{{ __('Register Assets') }}</p>
+                                <p style="margin-top: 2px;">{{ __('Register Assets') }}</p>
                             </a>
                         </li>
-                        <li @if ($pageSlug == 'inputticket') class="active " @endif>
+                        {{-- <li @if ($pageSlug == 'inputticket') class="active " @endif>
                             <a href="{{ route('inputticket') }}">
-                                <p>{{ __('Request Assets') }}</p>
+                                <p style="margin-top: 2px;">{{ __('Request Assets') }}</p>
                             </a>
                         </li>
                         <li @if ($pageSlug == 'user-tickets') class="active " @endif>
                             <a href="{{ route('user.tickets') }}">
-                                <p>{{ __('Requested Assets List') }}</p>
+                                <p style="margin-top: 2px;">{{ __('Requested Assets List') }}</p>
                             </a>
-                        </li>
+                        </li> --}}
                         <li @if ($pageSlug == 'assets-list') class="active " @endif>
+                            
                             <a href="{{ route('assetsmanagement.assetslist') }}">
-                                <p>{{ __('Assets List') }}</p>
+                                {{-- <i class=""></i> --}}
+                                <p style="margin-top: 2px;">{{ __('Assets List') }}</p>
                             </a>
                         </li>
                     </ul>

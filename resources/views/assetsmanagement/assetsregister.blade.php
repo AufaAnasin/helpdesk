@@ -127,7 +127,7 @@
                                     </div>
                                     {{-- please put File Upload Placeholder that can be drag and drop, with maximum 4 files and 5MB and also can see the list of file that already uploaded --}}
                                 </div>
-                                <div class="form-check" id="isBorrowAbleCheckbox" style="display: none;">
+                                <div class="form-check" id="isBorrowAbleCheckbox">
                                     <label class="form-check-label">
                                         <input class="form-check-input" type="checkbox" name="is_borrowable" value="1">
                                         Is Borrowable?
@@ -159,11 +159,11 @@
             if (toggleCheckbox.checked) {
                 selectedValueInput.value = 'Hardware';
                 hardwareLocationField.style.display = 'block'; // Show Hardware Location field
-                isBorrowAbleCheckbox.style.display = 'block'; // Show Borrowable checkbox
+                // isBorrowAbleCheckbox.style.display = 'block'; 
             } else {
                 selectedValueInput.value = 'Software';
                 hardwareLocationField.style.display = 'none'; // Hide Hardware Location field
-                isBorrowAbleCheckbox.style.display = 'none'; // Hide Borrowable checkbox
+                // isBorrowAbleCheckbox.style.display = 'none'; 
             }
         });
 
