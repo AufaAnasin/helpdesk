@@ -12,6 +12,7 @@
         "laravel/telescope": "^5.2",
         "laravel/tinker": "^2.9",
         "laravel/ui": "^4.6",
+        "league/csv": "^9.22",
         "php-flasher/flasher-laravel": "^2.1"
     },
     "require-dev": {

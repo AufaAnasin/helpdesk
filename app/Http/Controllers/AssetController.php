@@ -184,6 +184,6 @@ class AssetController extends Controller
 
     public function requestAssets(){
         $pageSlug = 'request-assets';
-        return view('assetsmanagement.assetrequest', compact('pageSlug'));
+        return view('assetrequest.assetrequest', compact('pageSlug'));
     }
 }

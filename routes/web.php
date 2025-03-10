@@ -30,7 +30,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/asset-detail', ['as' => 'assetsmanagement.getDetailById', 'uses' => 'App\Http\Controllers\AssetController@getDetailById']);// for showing the detail of the asset
     Route::get('/asset-edit', ['as' => 'assetsmanagement.assetsedit', 'uses' => 'App\Http\Controllers\AssetController@editAssets']);
     Route::post('/asset-edit/update', ['as' => 'assetsmanagement.updateAssets', 'uses' => 'App\Http\Controllers\AssetController@updateAssets']);
-    Route::get('/request-assets', ['as' => 'assetsmanagement.requestAssets', 'uses' => 'App\Http\Controllers\AssetController@requestAssets']);
+    Route::get('/request-assets', ['as' => 'assetsmanagement.requestAssets', 'uses' => 'App\Http\Controllers\AssetRequestController@requestAssets']);
+    Route::get('/request-assets/preview', ['as' => 'assetsmanagement.reviewRequestAssets', 'uses' => 'App\Http\Controllers\AssetRequestController@reviewAssetsRequest']);
+    Route::post('/request-assets/submit', ['as' => 'assetsmanagement.submit', 'uses' => 'App\Http\Controllers\AssetRequestController@submit']);
     
     // User CRUD
     Route::post('/users', ['as' => 'users.store', 'uses' => 'App\Http\Controllers\UserController@store']); // Admin only
@@ -47,6 +49,11 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Comment CRUD
     Route::post('/tickets/{id}/comments', ['as' => 'tickets.addComment','uses' => 'App\Http\Controllers\TicketController@addComment' ]); // Admin and Client
+
+
+    // Employee Detail
+    Route::get('/autocomplete-employees', ['as' => 'autocomplete.employees', 'uses' => 'App\Http\Controllers\EmployeeController@autocomplete']); // Admin and Client
+
 });
 
 Route::group(['middleware' => 'auth'], function () {

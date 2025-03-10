@@ -21,26 +21,31 @@ class TicketController extends Controller
             // Validate the request
             $request->validate([
                 'title' => 'required|string|max:255',
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|max:255',
                 'message' => 'required|string',
-                'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:20480', // Validate each image
+                'priority' => 'required|in:low,medium,high,very_high',
+                'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:20480', // Validate each image (20MB max)
             ]);
-    
+
             // Create a new ticket
             $ticket = Ticket::create([
                 'user_id' => Auth::id(), // Get the currently logged-in user's ID
                 'user_name' => Auth::user()->name,
                 'title' => $request->title,
+                'name' => $request->name,
+                'email' => $request->email,
                 'message' => $request->message,
                 'status' => 'open', // Default status
                 'priority' => $request->priority,
             ]);
-    
-            // Handle image uploads
-            if (!empty($request->images)) {
+
+            // Handle image uploads (max 7 images)
+            if (!empty($request->images) && count($request->images) <= 7) {
                 foreach ($request->images as $image) {
                     // Store the image and get the path
                     $path = $image->store('ticket_images', 'public'); // Store in public/ticket_images
-    
+
                     // Create a new TicketImage record
                     TicketImage::create([
                         'ticket_id' => $ticket->id,
@@ -48,7 +53,7 @@ class TicketController extends Controller
                     ]);
                 }
             }
-    
+
             // Display success message
             flash()->options(['timeout' => 3000, 'position' => 'bottom-center'])->success('Your Ticket has been submitted.');
             return redirect()->route('inputticket');
@@ -66,8 +71,6 @@ class TicketController extends Controller
             return redirect()->route('inputticket');
         }
     }
-    
-    
 
     public function index()
     {
@@ -85,28 +88,28 @@ class TicketController extends Controller
     {
         // Find the ticket by ID or fail
         $ticket = Ticket::with('images')->findOrFail($id); // Eager load images
-    
+
         // Delete associated images
         foreach ($ticket->images as $image) {
             // Construct the full path to the image
             $imagePath = public_path('storage/' . $image->image_path);
-            
+
             // Check if the file exists and delete it
             if (file_exists($imagePath)) {
                 unlink($imagePath); // Delete the file
             }
         }
-    
+
         // Delete the ticket
         $ticket->delete();
-    
+
         // Flash message for successful deletion
         flash()->options(['timeout' => 3000, 'position' => 'bottom-center'])->info('Ticket has been deleted.');
-        
+
         // Redirect to the tickets list
         return redirect()->route('tickets.list');
     }
-    
+
     public function updateStatus(Request $request, $id)
     {
         $request->validate([
@@ -129,7 +132,6 @@ class TicketController extends Controller
         // Return the view with the tickets
         return view('usertickets', compact('tickets'));
     }
-
 
     public function addComment(Request $request, $id)
     {

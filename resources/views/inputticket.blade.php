@@ -2,210 +2,185 @@
 
 @section('content')
 
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    </head>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
 
-    <body>
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <p>Input Ticket</p>
-                    <div class="card">
-                        <div class="card-body">
-                            <form method="POST" action="{{ route('tickets.store') }}" enctype="multipart/form-data">
-                                @csrf
-                                <div class="form-group">
-                                    <label for="title">Title</label>
-                                    <input type="text" class="form-control" id="title" name="title"
-                                        placeholder="Title" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="message">Message</label>
-                                    <textarea class="form-control" id="message" name="message" placeholder="Enter your message here" required></textarea>
-                                </div>
-                                <div class="row priority-uploadimages">
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <label for="exampleFormControlSelect1">Priority</label>
-                                            <select class="form-control" id="priority" name="priority" required>
-                                                <option value="low">Low</option>
-                                                <option value="medium">Medium</option>
-                                                <option value="high">High</option>
-                                                <option value="verry_high">Verry High</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <label for="imageUpload">Upload Images (Max 7)</label>
-                                            <div id="drop-area" class="drop-area">
-                                                <p>Drag & drop your images here or click to select</p>
-                                                <input type="file" id="imageUpload" name="images[]" multiple
-                                                    accept="image/*" style="display: none;">
-                                            </div>
-                                            <small class="form-text text-muted">You can upload up to 7 images.</small>
-                                        </div>
-                                    </div>
-                                </div>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <p>Input Ticket</p>
+                <div class="card">
+                    <div class="card-body">
+                        <form method="POST" action="{{ route('tickets.store') }}" enctype="multipart/form-data">
+                            @csrf
+                            <div class="form-group">
+                                <label for="title">Title</label>
+                                <input type="text" class="form-control" id="title" name="title" placeholder="Title" required>
+                            </div>
 
-                                <div id="image-preview" class="image-preview"></div>
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" class="form-control" id="name" name="name" placeholder="Start typing a name..." required autocomplete="off">
+                                <div id="nameList" class="autocomplete-list"></div>
+                            </div>
 
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </form>
+                            <div class="form-group">
+                                <label for="division">Division</label>
+                                <input type="text" class="form-control" id="division" name="division" placeholder="Division" readonly>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="message">Description</label>
+                                <textarea class="form-control" id="message" name="message" placeholder="Enter your message here" required></textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+
+                        <!-- Generated Message Section -->
+                        <div id="generatedMessage" class="mt-4" style="display: none; ">
+                            <h5>Generated Message:</h5>
+                            <pre id="messageContent" style="white-space: pre-wrap; background: #0d5094; padding: 10px; border-radius: 5px;"></pre>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </body>
+    </div>
+</body>
 
+<style>
+    .autocomplete-list {
+        position: absolute;
+        background: white;
+        border: 1px solid #ddd;
+        width: 100%;
+        max-height: 200px;
+        overflow-y: auto;
+        z-index: 1000;
+        display: none;
+    }
 
-    <style>
+    .autocomplete-item {
+        padding: 10px;
+        cursor: pointer;
+    }
 
-        .drop-area {
-            border: 2px dashed #2b3553;
-            border-radius: 5px;
-            padding: 20px;
-            text-align: center;
-            cursor: pointer;
-            margin-top: 10px;
-        }
+    .autocomplete-item:hover {
+        background: #023449;
+    }
+</style>
 
-        .drop-area.hover {
-            border-color: #0056b3;
-        }
+<script>
+$(document).ready(function () {
+    $('#name').on('input', function () {
+        let query = $(this).val();
 
-        .image-preview {
-            display: flex;
-            flex-wrap: wrap;
-            margin-top: 10px;
-        }
+        if (query.length > 2) {
+            $.ajax({
+                url: "{{ route('autocomplete.employees') }}",
+                type: "GET",
+                data: { query: query },
+                success: function (data) {
+                    let nameList = $('#nameList');
+                    nameList.empty();
 
-        .image-preview div {
-            position: relative;
-            /* Position relative for absolute positioning of delete button */
-            margin: 5px;
-        }
-
-        .image-preview img {
-            width: 100px;
-            /* Set the width of the preview images */
-            height: auto;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        .delete-btn {
-            position: absolute;
-            /* Position absolute to place it in the corner */
-            top: 0;
-            right: 0;
-            background: red;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            /* Make the button circular */
-            cursor: pointer;
-            width: 25px;
-            /* Set width */
-            height: 25px;
-            /* Set height */
-            padding: 0;
-            /* Remove padding */
-            font-size: 14px;
-            /* Adjust font size */
-            display: flex;
-            /* Center the text */
-            align-items: center;
-            /* Center vertically */
-            justify-content: center;
-            /* Center horizontally */
-        }
-    </style>
-
-    <script>
-        const dropArea = document.getElementById('drop-area');
-        const imageUpload = document.getElementById('imageUpload');
-        const imagePreview = document.getElementById('image-preview');
-        let selectedFiles = []; // Array to hold selected files
-
-        // Prevent default drag behaviors
-        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-            dropArea.addEventListener(eventName, preventDefaults, false);
-            document.body.addEventListener(eventName, preventDefaults, false);
-        });
-
-        // Highlight drop area when item is dragged over it
-        ['dragenter', 'dragover'].forEach(eventName => {
-            dropArea.addEventListener(eventName, highlight, false);
-        });
-
-        // Remove highlight when item is no longer hovering
-        ['dragleave', 'drop'].forEach(eventName => {
-            dropArea.addEventListener(eventName, unhighlight, false);
-        });
-
-        // Handle dropped files
-        dropArea.addEventListener('drop', handleDrop, false);
-        dropArea.addEventListener('click', () => imageUpload.click());
-
-        function preventDefaults(e) {
-            e.preventDefault();
-            e.stopPropagation();
-        }
-
-        function highlight() {
-            dropArea.classList.add('hover');
-        }
-
-        function unhighlight() {
-            dropArea.classList.remove('hover');
-        }
-
-        function handleDrop(e) {
-            const dt = e.dataTransfer;
-            const files = dt.files;
-            addFiles(files);
-        }
-
-        imageUpload.addEventListener('change', (e) => {
-            const files = e.target.files;
-            addFiles(files);
-        });
-
-        function addFiles(files) {
-            if (selectedFiles.length + files.length > 7) {
-                alert('You can only upload a maximum of 7 images.');
-                return;
-            }
-            Array.from(files).forEach(file => {
-                selectedFiles.push(file);
-                displayImage(file);
+                    if (data.length > 0) {
+                        nameList.show();
+                        data.forEach(function (employee) {
+                            nameList.append(
+                                `<div class="autocomplete-item" 
+                                    data-name="${employee.full_name}" 
+                                    data-email="${employee.email}" 
+                                    data-division="${employee.division}">
+                                    ${employee.full_name} (${employee.division})
+                                </div>`
+                            );
+                        });
+                    } else {
+                        nameList.hide();
+                    }
+                }
             });
+        } else {
+            $('#nameList').hide();
         }
+    });
 
-        function displayImage(file) {
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                const imgContainer = document.createElement('div');
-                const img = document.createElement('img');
-                img.src = event.target.result;
-                imgContainer.appendChild(img);
+    $(document).on('click', '.autocomplete-item', function () {
+        let name = $(this).data('name');
+        let email = $(this).data('email');
+        let division = $(this).data('division');
 
-                // Create delete button
-                const deleteBtn = document.createElement('button');
-                deleteBtn.innerText = 'X';
-                deleteBtn.className = 'delete-btn';
-                deleteBtn.onclick = function() {
-                    imgContainer.remove();
-                    selectedFiles = selectedFiles.filter(f => f !== file); // Remove file from array
-                };
+        $('#name').val(name);
+        $('#email').val(email);
+        $('#division').val(division);
+        $('#nameList').hide();
+    });
 
-                imgContainer.appendChild(deleteBtn);
-                imagePreview.appendChild(imgContainer);
-            }
-            reader.readAsDataURL(file);
+    $(document).on('click', function (e) {
+        if (!$(e.target).closest('#name, #nameList').length) {
+            $('#nameList').hide();
         }
-    </script>
+    });
+
+    // Message generation logic
+    $('form').on('input', function () {
+        let name = $('#name').val();
+        let email = $('#email').val();
+        let division = $('#division').val();
+        let title = $('#title').val();
+        let description = $('#message').val();
+        let date = new Date().toLocaleDateString();
+
+        let message = `
+Kepada Bapak ${name},
+Terima kasih telah mendaftarkan permintaan dukungan kepada Departemen IT. Kami senang dapat membantu anda dalam menyelesaikan berbagai masalah teknis dan dukungan yang dibutuhkan.
+Berikut adalah detail registrasi Anda:
+
+No. Registrasi          : 
+Nama                    : ${name}
+Email                   : ${email}
+Departemen/Divisi       : ${division}
+Jenis Permintaan        : ${title}
+
+Tanggal Registrasi      : ${date}
+Status                  : Open
+Deskripsi Pekerjaan     :
+${description}
+
+Dengan registrasi ini, Anda akan mendapatkan akses ke berbagai layanan dukungan IT kami, termasuk:
+
+1. Bantuan Teknis: Tim kami siap membantu Anda dalam menyelesaikan masalah teknis yang Anda alami.
+2. Panduan dan Tutorial: Akses ke berbagai panduan dan tutorial untuk membantu Anda memahami dan menggunakan sistem dengan lebih baik.
+
+Jika Anda memiliki pertanyaan atau membutuhkan bantuan lebih lanjut, jangan ragu untuk menghubungi kami melalui:
+• Email: it-services@bai.id
+
+Terima kasih atas kepercayaan Anda kepada kami. Kami berkomitmen untuk memberikan layanan terbaik kepada Anda.
+
+Best Regards,
+
+Information Technology Departement
+📧 it-services@bai.id | 🌐 www.bai.id
+        `;
+
+        if (name && email && division && title && description) {
+            $('#generatedMessage').show();
+            $('#messageContent').text(message);
+        } else {
+            $('#generatedMessage').hide();
+        }
+    });
+});
+</script>
+
 @endsection

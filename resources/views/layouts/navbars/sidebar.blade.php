@@ -12,8 +12,26 @@
                     <p style="margin-top: 2px;">{{ __('List of Users') }}</p>
                 </a>
             </li>
+            <li @if ($pageSlug == 'tickets') class="active " @endif>
+                <a href="{{ route('tickets.list') }}">
+                    <i class="tim-icons icon-spaceship"></i>
+                    <p style="margin-top: 2px;">{{ __('Tickets Ongoing') }}</p>
+                </a>
+            </li>
+            <li @if ($pageSlug == 'inputticket') class="active " @endif>
+                <a href="{{ route('inputticket') }}">
+                    <i class="tim-icons icon-simple-add"></i>
+                    <p style="margin-top: 2px;">{{ __('Input Ticket') }}</p>
+                </a>
+            </li>
+            <li @if ($pageSlug == 'user-tickets') class="active " @endif>
+                <a href="{{ route('user.tickets') }}">
+                    <i class="tim-icons icon-bullet-list-67"></i>
+                    <p style="margin-top: 2px;">{{ __('My Tickets') }}</p>
+                </a>
+            </li>
             {{-- Troubleshooting --}}
-            <li>
+            {{-- <li>
                 <a data-toggle="collapse" href="#laravel-examples" aria-expanded="true">
                     <i class="fas fa-microchip"></i>
                     <span class="nav-link-text">{{ __('Troubleshooting') }}</span>
@@ -21,25 +39,10 @@
                 </a>
                 <div class="collapse show" id="laravel-examples">
                     <ul class="nav pl-4">
-                        <li @if ($pageSlug == 'tickets') class="active " @endif>
-                            <a href="{{ route('tickets.list') }}">
-                  
-                                <p style="margin-top: 2px;">{{ __('Tickets Ongoing') }}</p>
-                            </a>
-                        </li>
-                        <li @if ($pageSlug == 'inputticket') class="active " @endif>
-                            <a href="{{ route('inputticket') }}">
-                                <p style="margin-top: 2px;">{{ __('Input Ticket') }}</p>
-                            </a>
-                        </li>
-                        <li @if ($pageSlug == 'user-tickets') class="active " @endif>
-                            <a href="{{ route('user.tickets') }}">
-                                <p style="margin-top: 2px;">{{ __('My Tickets') }}</p>
-                            </a>
-                        </li>
+                        
                     </ul>
                 </div>
-            </li>
+            </li> --}}
             {{-- Goods Borrowing --}}
             {{-- <li>
                 <a data-toggle="collapse" href="#goods-borrowing-toggle" aria-expanded="true">
@@ -68,7 +71,7 @@
                 </div>
             </li> --}}
             {{-- Assets Management --}}
-            <li>
+             {{-- <li>
                 <a data-toggle="collapse" href="#assets-management-toggle" aria-expanded="true">
                     <i class="fab fa-laravel"></i>
                     <span class="nav-link-text">{{ __('Assets Management') }}</span>
@@ -86,21 +89,16 @@
                                 <p style="margin-top: 2px;">{{ __('Request Assets') }}</p>
                             </a>
                         </li>
-                        {{-- <li @if ($pageSlug == 'user-tickets') class="active " @endif>
-                            <a href="{{ route('user.tickets') }}">
-                                <p style="margin-top: 2px;">{{ __('Requested Assets List') }}</p>
-                            </a>
-                        </li> --}}
                         <li @if ($pageSlug == 'assets-list') class="active " @endif>
                             
                             <a href="{{ route('assetsmanagement.assetslist') }}">
-                                {{-- <i class=""></i> --}}
+                                
                                 <p style="margin-top: 2px;">{{ __('Assets List') }}</p>
                             </a>
                         </li>
                     </ul>
                 </div>
-            </li>
+            </li>  --}}
             {{-- Regular Monitoring --}}
             {{-- <li>
                 <a data-toggle="collapse" href="#laravel-examples" aria-expanded="true">
